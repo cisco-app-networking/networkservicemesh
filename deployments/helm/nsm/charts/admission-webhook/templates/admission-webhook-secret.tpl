@@ -77,6 +77,10 @@ spec:
             - name: UPDATE_API_DEFAULT_DNS_SERVER
               value: {{ .Values.global.ExtraDnsServers | quote }}
 {{- end }}
+{{- if .Values.global.OverrideNsmCoreDns }}
+            - name: OVERRIDE_NSM_COREDNS
+              value: {{ .Values.global.OverrideNsmCoreDns | quote }}
+{{- end }}
           volumeMounts:
             - name: webhook-certs
               mountPath: /etc/webhook/certs

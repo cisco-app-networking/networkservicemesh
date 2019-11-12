@@ -37,7 +37,7 @@ else
             --resource-group "$AZURE_RESOURCE_GROUP" \
             --name "$AZURE_CLUSTER_NAME" \
             --node-count 2 \
-            --node-vm-size Standard_B2s \
+            --node-vm-size Standard_DS2 \
             --generate-ssh-keys \
             --debug \
             --no-wait && \

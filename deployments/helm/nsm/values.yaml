@@ -23,3 +23,6 @@ global:
   NSRegistrySvc: false
   NSMApiSvcType: ClusterIP
   NSMApiSvcPort: 5001
+
+  # use gcr.io coredns
+  OverrideNsmCoreDns: false

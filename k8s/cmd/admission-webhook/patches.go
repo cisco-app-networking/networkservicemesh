@@ -20,12 +20,17 @@ type patchOperation struct {
 }
 
 func createDNSPatch(tuple *podSpecAndMeta, annotationValue string) (patch []patchOperation) {
+	coreDnsImage := fmt.Sprintf("%s/%s:%s", getRepo(), "nsm-coredns", getTag())
+	if nsmcorednsenv.OverrideNsmCoreDns.GetBooleanOrDefault(false) {
+		coreDnsImage = "k8s.gcr.io/coredns:1.2.6"
+	}
+
 	patch = append(patch, addContainer(tuple.spec,
 		[]corev1.Container{
 			{
 				Name:            "nsm-coredns",
 				//Image:           fmt.Sprintf("%s/%s:%s", getRepo(), "nsm-coredns", getTag()),
-				Image:           "k8s.gcr.io/coredns:1.2.6",
+				Image:           coreDnsImage,
 				ImagePullPolicy: corev1.PullIfNotPresent,
 				Args:            []string{"-conf", "/etc/coredns/Corefile"},
 				VolumeMounts: []corev1.VolumeMount{{
@@ -74,33 +79,35 @@ func createDNSPatch(tuple *podSpecAndMeta, annotationValue string) (patch []patc
 			},
 		}
 	}
-	patch = append(patch, addContainer(tuple.spec,
-		[]corev1.Container{
-			{
-				Name:            "nsm-dns-monitor",
-				Image:           fmt.Sprintf("%s/%s:%s", getRepo(), "nsm-monitor", getTag()),
-				ImagePullPolicy: corev1.PullIfNotPresent,
-				Env: []corev1.EnvVar{
-					{
-						Name:  "MONITOR_DNS_CONFIGS",
-						Value: "true",
+	if !nsmcorednsenv.OverrideNsmCoreDns.GetBooleanOrDefault(false) {
+		patch = append(patch, addContainer(tuple.spec,
+			[]corev1.Container{
+				{
+					Name:            "nsm-dns-monitor",
+					Image:           fmt.Sprintf("%s/%s:%s", getRepo(), "nsm-monitor", getTag()),
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Env: []corev1.EnvVar{
+						{
+							Name:  "MONITOR_DNS_CONFIGS",
+							Value: "true",
+						},
+						{
+							Name:  nsmcorednsenv.UpdateAPIClientSock.Name(),
+							Value: "/etc/coredns/client.sock"},
+						{
+							Name:  client.AnnotationEnv,
+							Value: annotationValue,
+						},
 					},
-					{
-						Name:  nsmcorednsenv.UpdateAPIClientSock.Name(),
-						Value: "/etc/coredns/client.sock"},
-					{
-						Name:  client.AnnotationEnv,
-						Value: annotationValue,
+					VolumeMounts: volmMount,
+					Resources: corev1.ResourceRequirements{
+						Limits: corev1.ResourceList{
+							"networkservicemesh.io/socket": resource.MustParse("1"),
+						},
 					},
 				},
-				VolumeMounts: volmMount,
-				Resources: corev1.ResourceRequirements{
-					Limits: corev1.ResourceList{
-						"networkservicemesh.io/socket": resource.MustParse("1"),
-					},
-				},
-			},
-		})...)
+			})...)
+	}
 	patch = append(patch, addVolume(tuple.spec,
 		[]corev1.Volume{{
 			Name: "nsm-coredns-volume",
