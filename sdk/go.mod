@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/sdk
+module github.com/tiswanso/networkservicemesh/sdk
 
 require (
 	github.com/fsnotify/fsnotify v1.4.7

@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/controlplane/api
+module github.com/tiswanso/networkservicemesh/controlplane/api
 
 require (
 	github.com/golang/protobuf v1.3.2

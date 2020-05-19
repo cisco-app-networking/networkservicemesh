@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/k8s/api
+module github.com/tiswanso/networkservicemesh/k8s/api
 
 require (
 	github.com/golang/protobuf v1.3.2

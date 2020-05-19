@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/scripts/aws
+module github.com/tiswanso/networkservicemesh/scripts/aws
 
 require (
 	github.com/aws/aws-sdk-go v1.23.19

@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/pkg
+module github.com/tiswanso/networkservicemesh/pkg
 
 go 1.12
 

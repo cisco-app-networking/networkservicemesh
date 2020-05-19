@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh
+module github.com/tiswanso/networkservicemesh
 
 replace (
 	// ./scripts/switch_k8s_version.sh to change k8s version

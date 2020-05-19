@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/utils
+module github.com/tiswanso/networkservicemesh/utils
 
 require (
 	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.2.0

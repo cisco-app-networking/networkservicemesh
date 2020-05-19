@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/controllers/sriov-controller
+module github.com/tiswanso/networkservicemesh/controllers/sriov-controller
 
 require (
 	github.com/ghodss/yaml v1.0.0

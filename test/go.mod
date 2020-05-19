@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/test
+module github.com/tiswanso/networkservicemesh/test
 
 require (
 	github.com/fsnotify/fsnotify v1.4.7
@@ -15,6 +15,7 @@ require (
 	github.com/networkservicemesh/networkservicemesh/pkg v0.2.0
 	github.com/networkservicemesh/networkservicemesh/sdk v0.2.0
 	github.com/networkservicemesh/networkservicemesh/side-cars v0.2.0
+	github.com/networkservicemesh/networkservicemesh/test v0.0.0-00010101000000-000000000000
 	github.com/networkservicemesh/networkservicemesh/utils v0.2.0
 	github.com/onsi/gomega v1.7.0
 	github.com/packethost/packngo v0.1.1-0.20190507131943-1343be729ca2

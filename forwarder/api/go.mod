@@ -1,4 +1,4 @@
-module github.com/networkservicemesh/networkservicemesh/forwarder/api
+module github.com/tiswanso/networkservicemesh/forwarder/api
 
 require (
 	github.com/golang/protobuf v1.3.2
