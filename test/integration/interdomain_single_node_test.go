@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Cisco and/or its affiliates.
+// Copyright (c) 2020 Doc.ai and/or its affiliates.
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -14,13 +14,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// +build interdomain
+// +build basic
 
 package integration
 
 import (
 	"fmt"
-	"os"
 	"testing"
 
 	. "github.com/onsi/gomega"
@@ -30,24 +29,18 @@ import (
 	"github.com/networkservicemesh/networkservicemesh/test/kubetest/pods"
 )
 
-func TestFloatingInterdomain(t *testing.T) {
+func TestInterdomainSingleNode(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skip, please run without -short")
 		return
 	}
 
-	testFloatingInterdomain(t, 2)
-}
-
-func testFloatingInterdomain(t *testing.T, clustersCount int) {
 	g := NewWithT(t)
 
 	k8ss := []*kubetest.ExtK8s{}
-	for i := 0; i < clustersCount; i++ {
-		kubeconfig := os.Getenv(fmt.Sprintf("KUBECONFIG_CLUSTER_%d", i+1))
-		g.Expect(len(kubeconfig)).ToNot(Equal(0))
+	for i := 0; i < 1; i++ {
 
-		k8s, err := kubetest.NewK8sForConfig(g, true, kubeconfig)
+		k8s, err := kubetest.NewK8s(g, true)
 		g.Expect(err).To(BeNil())
 
 		defer k8s.Cleanup()
@@ -59,8 +52,8 @@ func testFloatingInterdomain(t *testing.T, clustersCount int) {
 		})
 	}
 
-	nsmrsNode := &k8ss[clustersCount-1].K8s.GetNodesWait(2, defaultTimeout)[1]
-	nsmrsPod := kubetest.DeployNSMRS(k8ss[clustersCount-1].K8s, nsmrsNode, "nsmrs", defaultTimeout, pods.DefaultNSMRS())
+	nsmrsNode := &k8ss[0].K8s.GetNodesWait(2, defaultTimeout)[1]
+	nsmrsPod := kubetest.DeployNSMRS(k8ss[0].K8s, nsmrsNode, "nsmrs", defaultTimeout, pods.DefaultNSMRS())
 
 	nsmrsExternalIP, err := kubetest.GetNodeExternalIP(nsmrsNode)
 	if err != nil {
@@ -70,7 +63,7 @@ func testFloatingInterdomain(t *testing.T, clustersCount int) {
 	nsmrsInternalIP, err := kubetest.GetNodeInternalIP(nsmrsNode)
 	g.Expect(err).To(BeNil())
 
-	for i := 0; i < clustersCount; i++ {
+	for i := 0; i < 1; i++ {
 		k8s := k8ss[i].K8s
 
 		nodesSetup, err := kubetest.SetupNodes(k8s, 1, defaultTimeout)
@@ -91,8 +84,8 @@ func testFloatingInterdomain(t *testing.T, clustersCount int) {
 		defer serviceCleanup()
 	}
 
-	_ = kubetest.DeployICMP(k8ss[clustersCount-1].K8s, k8ss[clustersCount-1].NodesSetup[0].Node, "icmp-responder-nse-1", defaultTimeout)
-	k8ss[clustersCount-1].K8s.WaitLogsContains(nsmrsPod, "nsmrs", "Registered NSE entry", defaultTimeout)
+	_ = kubetest.DeployICMP(k8ss[0].K8s, k8ss[0].NodesSetup[0].Node, "icmp-responder-nse-1", defaultTimeout)
+	k8ss[0].K8s.WaitLogsContains(nsmrsPod, "nsmrs", "Registered NSE entry", defaultTimeout)
 
 	nscPodNode := kubetest.DeployNSCWithEnv(k8ss[0].K8s, k8ss[0].NodesSetup[0].Node, "nsc-1", defaultTimeout, map[string]string{
 		"CLIENT_LABELS":          "app=icmp",

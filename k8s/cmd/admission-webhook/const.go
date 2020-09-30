@@ -18,6 +18,7 @@ const (
 	tracerEnabledEnv        = "TRACER_ENABLED"
 	jaegerHostEnv           = "JAEGER_AGENT_HOST"
 	jaegerPortEnv           = "JAEGER_AGENT_PORT"
+	enforceLimitsEnv        = "ENFORCE_LIMITS"
 	repoDefault             = "networkservicemesh"
 	initContainerDefault    = "nsm-init"
 	dnsInitContainerDefault = "nsm-dns-init"
@@ -32,4 +33,22 @@ const (
 	volumePath              = "/spec/volumes"
 	containersPath          = "/spec/containers"
 	defaultPort             = 443
+
+	// Keep in sync with ../../../test/kubetest/pods/common.go.
+	//
+	// Limits (especially the CPU limit) should be low enough to be
+	// available to allocate in a limited environment (including CI test).
+
+	// Limits for 'nsm-monitor' container.
+	nsmMonitorCPULimit    = "100m"
+	nsmMonitorMemoryLimit = "15Mi"
+	// Limits for 'coredns' container.
+	corednsCPULimit    = "100m"
+	corednsMemoryLimit = "15Mi"
+	// Limits for 'nsm-init' container.
+	nsmInitCPULimit    = "200m"
+	nsmInitMemoryLimit = "20Mi"
+	// Limits for 'nsm-dns-init' container.
+	nsmDNSInitCPULimit    = "200m"
+	nsmDNSInitMemoryLimit = "15Mi"
 )
