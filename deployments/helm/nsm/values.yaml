@@ -23,7 +23,7 @@ kernel:
 
 spire:
   enabled: true
-  selfSignedCA: true
+  selfSignedCA: false
 
 global:
   # set to true to enable Jaeger tracing for NSM components
