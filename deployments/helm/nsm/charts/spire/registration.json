@@ -59,6 +59,26 @@
       ],
       "spiffe_id": "spiffe://test.com/nsmrs",
       "parent_id": "spiffe://test.com/spire-agent"
+    },
+    {
+      "selectors": [
+        {
+          "type": "k8s",
+          "value": "sa:hello-client-acc"
+        }
+      ],
+      "spiffe_id": "spiffe://test.com/hello-client",
+      "parent_id": "spiffe://test.com/spire-agent"
+    },
+    {
+      "selectors": [
+        {
+          "type": "k8s",
+          "value": "sa:example-acc"
+        }
+      ],
+      "spiffe_id": "spiffe://test.com/example",
+      "parent_id": "spiffe://test.com/spire-agent"
     }
   ]
 }
