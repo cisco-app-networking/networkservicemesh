@@ -11,3 +11,9 @@ subjects:
   - kind: ServiceAccount
     name: nsmgr-acc
     namespace: {{ .Release.Namespace }}
+  - kind: ServiceAccount
+    name: proxy-nsmgr-acc
+    namespace: {{ .Release.Namespace }}
+  - kind: ServiceAccount
+    name: crossconnect-monitor-acc
+    namespace: {{ .Release.Namespace }}

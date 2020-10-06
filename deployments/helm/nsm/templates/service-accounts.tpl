@@ -21,3 +21,15 @@ kind: ServiceAccount
 metadata:
   name: forward-plane-acc
   namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: proxy-nsmgr-acc
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: crossconnect-monitor-acc
+  namespace: {{ .Release.Namespace }}

@@ -24,6 +24,26 @@
       "selectors": [
         {
           "type": "k8s",
+          "value": "sa:crossconnect-monitor-acc"
+        }
+      ],
+      "spiffe_id": "spiffe://test.com/crossconnect-monitor",
+      "parent_id": "spiffe://test.com/spire-agent"
+    },
+    {
+      "selectors": [
+        {
+          "type": "k8s",
+          "value": "sa:proxy-nsmgr-acc"
+        }
+      ],
+      "spiffe_id": "spiffe://test.com/proxy-nsmgr",
+      "parent_id": "spiffe://test.com/spire-agent"
+    },
+    {
+      "selectors": [
+        {
+          "type": "k8s",
           "value": "sa:nse-acc"
         }
       ],
@@ -78,6 +98,16 @@
         }
       ],
       "spiffe_id": "spiffe://test.com/example",
+      "parent_id": "spiffe://test.com/spire-agent"
+    },
+    {
+      "selectors": [
+        {
+          "type": "k8s",
+          "value": "sa:nse-discovery-sa"
+        }
+      ],
+      "spiffe_id": "spiffe://test.com/nse-discovery",
       "parent_id": "spiffe://test.com/spire-agent"
     }
   ]

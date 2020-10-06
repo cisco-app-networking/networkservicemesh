@@ -10,7 +10,7 @@ spec:
       labels:
         app: crossconnect-monitor
     spec:
-      serviceAccount: nsmgr-acc
+      serviceAccount: crossconnect-monitor-acc
       containers:
         - name: crossconnect-monitor
           image: {{ .Values.registry }}/{{ .Values.org }}/crossconnect-monitor:{{ .Values.tag }}

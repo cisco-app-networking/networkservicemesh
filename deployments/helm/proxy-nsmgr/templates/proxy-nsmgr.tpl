@@ -13,7 +13,7 @@ spec:
       labels:
         app: proxy-nsmgr-daemonset
     spec:
-      serviceAccount: nsmgr-acc
+      serviceAccount: proxy-nsmgr-acc
       containers:
         - name: proxy-nsmd
           image: {{ .Values.registry }}/{{ .Values.org }}/proxy-nsmd:{{ .Values.tag }}
