@@ -20,6 +20,7 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spiffe/go-spiffe/spiffe"
@@ -70,5 +71,11 @@ func NewSpireProvider(addr string) (Provider, error) {
 }
 
 func (p *spireProvider) GetTLSConfig(ctx context.Context) (*tls.Config, error) {
+	fmt.Println("GetTLSConfig called with ctx", ctx, "---- SPIRE PROVIDER ----", p.peer)
+	cert, err := p.peer.GetCertificate()
+	if err != nil {
+		fmt.Println("GetTLSConfig error:", err)
+	}
+	fmt.Println("Cert", cert)
 	return p.peer.GetConfig(ctx, spiffe.ExpectAnyPeer())
 }
