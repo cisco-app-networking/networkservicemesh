@@ -14,6 +14,7 @@ spec:
       hostPID: true
       hostNetwork: true
       serviceAccount: forward-plane-acc
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: {{ (index .Values $fp).image }}
           securityContext:
