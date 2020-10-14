@@ -14,30 +14,30 @@
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:nsmgr-acc"
+          "value": "sa:wcm-nsmgr-service-account"
         }
       ],
-      "spiffe_id": "spiffe://test.com/nsmgr",
+      "spiffe_id": "spiffe://test.com/wcm-nsmgr",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:crossconnect-monitor-acc"
+          "value": "sa:wcm-crossconnect-monitor-service-account"
         }
       ],
-      "spiffe_id": "spiffe://test.com/crossconnect-monitor",
+      "spiffe_id": "spiffe://test.com/wcm-crossconnect-monitor",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:proxy-nsmgr-acc"
+          "value": "sa:wcm-proxy-nsmgr-service-account"
         }
       ],
-      "spiffe_id": "spiffe://test.com/proxy-nsmgr",
+      "spiffe_id": "spiffe://test.com/wcm-proxy-nsmgr",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
@@ -64,10 +64,10 @@
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:forward-plane-acc"
+          "value": "sa:wcm-nsm-vpp-forwarder-service-account"
         }
       ],
-      "spiffe_id": "spiffe://test.com/forward-plane",
+      "spiffe_id": "spiffe://test.com/wcm-nsm-vpp-forwarder",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
@@ -104,10 +104,10 @@
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:nse-discovery-sa"
+          "value": "sa:wcm-nse-discovery-service-account"
         }
       ],
-      "spiffe_id": "spiffe://test.com/nse-discovery",
+      "spiffe_id": "spiffe://test.com/wcm-nse-discovery",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
