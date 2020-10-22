@@ -14,30 +14,30 @@
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:wcm-nsmgr-service-account"
+          "value": "sa:nsmgr-acc"
         }
       ],
-      "spiffe_id": "spiffe://test.com/wcm-nsmgr",
+      "spiffe_id": "spiffe://test.com/nsmgr",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:wcm-crossconnect-monitor-service-account"
+          "value": "sa:proxy-nsmgr-acc"
         }
       ],
-      "spiffe_id": "spiffe://test.com/wcm-crossconnect-monitor",
+      "spiffe_id": "spiffe://test.com/proxy-nsmgr",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:wcm-proxy-nsmgr-service-account"
+          "value": "sa:crossconnect-monitor-acc"
         }
       ],
-      "spiffe_id": "spiffe://test.com/wcm-proxy-nsmgr",
+      "spiffe_id": "spiffe://test.com/crossconnect-monitor",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
@@ -64,10 +64,10 @@
       "selectors": [
         {
           "type": "k8s",
-          "value": "sa:wcm-nsm-vpp-forwarder-service-account"
+          "value": "sa:forward-plane-acc"
         }
       ],
-      "spiffe_id": "spiffe://test.com/wcm-nsm-vpp-forwarder",
+      "spiffe_id": "spiffe://test.com/forward-plane",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
@@ -78,36 +78,6 @@
         }
       ],
       "spiffe_id": "spiffe://test.com/nsmrs",
-      "parent_id": "spiffe://test.com/spire-agent"
-    },
-    {
-      "selectors": [
-        {
-          "type": "k8s",
-          "value": "sa:hello-client-acc"
-        }
-      ],
-      "spiffe_id": "spiffe://test.com/hello-client",
-      "parent_id": "spiffe://test.com/spire-agent"
-    },
-    {
-      "selectors": [
-        {
-          "type": "k8s",
-          "value": "sa:example-acc"
-        }
-      ],
-      "spiffe_id": "spiffe://test.com/example",
-      "parent_id": "spiffe://test.com/spire-agent"
-    },
-    {
-      "selectors": [
-        {
-          "type": "k8s",
-          "value": "sa:wcm-nse-discovery-service-account"
-        }
-      ],
-      "spiffe_id": "spiffe://test.com/wcm-nse-discovery",
       "parent_id": "spiffe://test.com/spire-agent"
     },
     {
