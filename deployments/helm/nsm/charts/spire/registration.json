@@ -79,36 +79,6 @@
       ],
       "spiffe_id": "spiffe://test.com/nsmrs",
       "parent_id": "spiffe://test.com/spire-agent"
-    },
-    {
-      "selectors": [
-        {
-          "type": "k8s",
-          "value": "sa:example-connectivity-domain-service-account"
-        }
-      ],
-      "spiffe_id": "spiffe://test.com/example-connectivity-domain",
-      "parent_id": "spiffe://test.com/spire-agent"
-    },
-    {
-      "selectors": [
-        {
-          "type": "k8s",
-          "value": "sa:example-connectivity-domain-app-dns-publisher-service-account"
-        }
-      ],
-      "spiffe_id": "spiffe://test.com/example-connectivity-domain-app-dns-publisher",
-      "parent_id": "spiffe://test.com/spire-agent"
-    },
-    {
-      "selectors": [
-        {
-          "type": "k8s",
-          "value": "sa:example-connectivity-domain-wcmd-service-account"
-        }
-      ],
-      "spiffe_id": "spiffe://test.com/example-connectivity-domain-wcmd",
-      "parent_id": "spiffe://test.com/spire-agent"
     }
   ]
 }

@@ -5,4 +5,4 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   registration.json: |-
-{{ .Files.Get "registration.json" | indent 4}}
+{{ .Files.Get "registration.json" | indent 4 }}
