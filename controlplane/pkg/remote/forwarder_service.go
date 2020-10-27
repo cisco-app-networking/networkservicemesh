@@ -20,6 +20,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/ipsec"
+
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -122,6 +124,9 @@ func (cce *forwarderService) selectRemoteMechanism(request *networkservice.Netwo
 
 	case wireguard.MECHANISM:
 		cce.configureWireguardParameters(connectionID, parameters, dpParameters)
+
+	case ipsec.MECHANISM:
+		cce.configureIPSecParameters(parameters, dpParameters)
 	}
 
 	logrus.Infof("NSM:(5.1) Remote mechanism selected %v", mechanism)
@@ -179,6 +184,18 @@ func (cce *forwarderService) configureWireguardParameters(connectionID string, p
 	parameters[wireguard.DstPort] = wireguard.AssignPort(connectionID)
 
 	mechanisms.SetMTUOverheadParameter(parameters, wireguard.MTUOverhead)
+}
+
+func (cce *forwarderService) configureIPSecParameters(parameters, dpParameters map[string]string) {
+	cce.configureVXLANParameters(parameters, dpParameters)
+
+	parameters[ipsec.RemoteSAInIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
+	parameters[ipsec.RemoteSAOutIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
+	parameters[ipsec.RemoteEspSPI] = cce.serviceRegistry.IPSecAllocator().GenerateKey(8)
+	parameters[ipsec.RemoteIntegKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(20)
+	parameters[ipsec.RemoteEncrKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(16)
+
+	mechanisms.SetMTUOverheadParameter(parameters, ipsec.MTUOverhead)
 }
 
 func (cce *forwarderService) updateMechanism(request *networkservice.NetworkServiceRequest, dp *model.Forwarder) error {

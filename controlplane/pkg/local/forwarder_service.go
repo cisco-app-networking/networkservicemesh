@@ -19,6 +19,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/ipsec"
+
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -140,6 +142,8 @@ func (cce *forwarderService) prepareRemoteMechanisms(request *networkservice.Net
 		switch m.GetType() {
 		case srv6.MECHANISM:
 			cce.prepareSRv6Mechanism(m, request)
+		case ipsec.MECHANISM:
+			cce.prepareIPSecMechanism(m)
 		case wireguard.MECHANISM:
 			cce.prepareWireguardMechanism(m, request)
 		}
@@ -180,6 +184,25 @@ func (cce *forwarderService) prepareWireguardMechanism(m *connection.Mechanism, 
 	parameters[wireguard.SrcPort] = wireguard.AssignPort(request.Connection.Id)
 
 	mechanisms.SetMTUOverhead(m, wireguard.MTUOverhead)
+	return m
+}
+
+func (cce *forwarderService) prepareIPSecMechanism(m *connection.Mechanism) *connection.Mechanism {
+
+	parameters := m.GetParameters()
+	if parameters == nil {
+		parameters = map[string]string{}
+		m.Parameters = parameters
+	}
+
+	parameters[ipsec.LocalSAInIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
+	parameters[ipsec.LocalSAOutIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
+	parameters[ipsec.LocalEspSPI] = cce.serviceRegistry.IPSecAllocator().GenerateKey(8)
+	parameters[ipsec.LocalIntegKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(20)
+	parameters[ipsec.LocalEncrKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(16)
+
+	mechanisms.SetMTUOverhead(m, ipsec.MTUOverhead)
+
 	return m
 }
 

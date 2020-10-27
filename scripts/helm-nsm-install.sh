@@ -14,6 +14,7 @@ function usage () {
 --networkservice [endpoint network service],Name of Network Service connect to.
 --nsm_namespace [namespace],Name of the NSM namespace. Defaults to value of NSM_NAMESPACE
 --spire_enabled [true|false],Defaults to value of SPIRE_ENABLED
+--preferred_remote_mechanism [VXLAN|IPSEC],Defaults to VXLAN
 -h | --help,Display usage"
 
 echo -e "$FLAGS" | column -t --separator ","
@@ -113,6 +114,11 @@ case $key in
     shift
     shift
     ;;
+    --preferred_remote_mechanism)
+    PREFERRED_REMOTE_MECHANISM="$2"
+    shift
+    shift
+    ;;
     -h|--help)
     usage
     exit
@@ -165,6 +171,7 @@ $HELM install $VERSION_SPECIFIC_OPTS \
   --set admission-webhook.org="$CONTAINER_REPO",admission-webhook.tag="$CONTAINER_TAG" \
   --set prefix-service.org="$CONTAINER_REPO",prefix-service.tag="$CONTAINER_TAG" \
   --namespace "$NSM_NAMESPACE" \
+  --set preferredRemoteMechanism="IPSEC" \
   ./deployments/helm/"$CHART" &
 PID=$!
 set +o xtrace

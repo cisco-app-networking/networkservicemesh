@@ -4,6 +4,8 @@ import (
 	"net"
 	"time"
 
+	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/ipsec"
+
 	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/sid"
 
 	"golang.org/x/net/context"
@@ -44,6 +46,7 @@ type ServiceRegistry interface {
 
 	VniAllocator() vni.VniAllocator
 	SIDAllocator() sid.Allocator
+	IPSecAllocator() ipsec.Allocator
 
 	NewWorkspaceProvider() WorkspaceLocationProvider
 }

@@ -19,6 +19,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/ipsec"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/sirupsen/logrus"
@@ -219,34 +221,58 @@ func (v *VPPAgent) programMgmtInterface() error {
 	// it drops anything that isn't destined for VXLAN (port 4789).
 	// This way it avoids sending icmp port unreachable messages out.
 	// This bug wasn't really obvious till we tried to switch to hostNetwork:true
+
+	vxlanRule := &vpp_acl.ACL_Rule{
+		Action: vpp_acl.ACL_Rule_PERMIT,
+		IpRule: &vpp_acl.ACL_Rule_IpRule{
+			Ip: &vpp_acl.ACL_Rule_IpRule_Ip{
+				DestinationNetwork: v.common.EgressInterface.SrcIPNet().IP.String() + "/32",
+				SourceNetwork:      "0.0.0.0/0",
+			},
+			Udp: &vpp_acl.ACL_Rule_IpRule_Udp{
+				DestinationPortRange: &vpp_acl.ACL_Rule_IpRule_PortRange{
+					LowerPort: 4789,
+					UpperPort: 4789,
+				},
+				SourcePortRange: &vpp_acl.ACL_Rule_IpRule_PortRange{
+					LowerPort: 0,
+					UpperPort: 65535,
+				},
+			},
+		},
+	}
+
+	ipsecRule := &vpp_acl.ACL_Rule{
+		Action: vpp_acl.ACL_Rule_REFLECT,
+		IpRule: &vpp_acl.ACL_Rule_IpRule{
+			Ip: &vpp_acl.ACL_Rule_IpRule_Ip{
+				DestinationNetwork: v.common.EgressInterface.SrcIPNet().IP.String() + "/32",
+				SourceNetwork:      "0.0.0.0/0",
+			},
+			Udp: &vpp_acl.ACL_Rule_IpRule_Udp{
+				DestinationPortRange: &vpp_acl.ACL_Rule_IpRule_PortRange{
+					LowerPort: 4500,
+					UpperPort: 4500,
+				},
+				SourcePortRange: &vpp_acl.ACL_Rule_IpRule_PortRange{
+					LowerPort: 0,
+					UpperPort: 65535,
+				},
+			},
+		},
+	}
+
+	rules := make([]*vpp_acl.ACL_Rule, 0)
+	rules = append(rules, vxlanRule)
+	rules = append(rules, ipsecRule)
+
 	dataRequest.Update.VppConfig.Acls = []*vpp.ACL{
 		{
 			Name: "NSMmgmtInterfaceACL",
 			Interfaces: &vpp_acl.ACL_Interfaces{
 				Ingress: []string{dataRequest.Update.VppConfig.Interfaces[0].Name},
 			},
-			Rules: []*vpp_acl.ACL_Rule{
-				//Rule NSMmgmtInterfaceACL permit VXLAN dst
-				{
-					Action: vpp_acl.ACL_Rule_PERMIT,
-					IpRule: &vpp_acl.ACL_Rule_IpRule{
-						Ip: &vpp_acl.ACL_Rule_IpRule_Ip{
-							DestinationNetwork: v.common.EgressInterface.SrcIPNet().IP.String() + "/32",
-							SourceNetwork:      "0.0.0.0/0",
-						},
-						Udp: &vpp_acl.ACL_Rule_IpRule_Udp{
-							DestinationPortRange: &vpp_acl.ACL_Rule_IpRule_PortRange{
-								LowerPort: 4789,
-								UpperPort: 4789,
-							},
-							SourcePortRange: &vpp_acl.ACL_Rule_IpRule_PortRange{
-								LowerPort: 0,
-								UpperPort: 65535,
-							},
-						},
-					},
-				},
-			},
+			Rules: rules,
 		},
 	}
 
@@ -417,6 +443,13 @@ func (v *VPPAgent) configureVPPAgent() error {
 				Parameters: map[string]string{
 					vxlan.SrcIP:            v.common.EgressInterface.SrcIPNet().IP.String(),
 					mechanisms.MTUOverhead: strconv.Itoa(vxlan.MTUOverhead),
+				},
+			},
+			{
+				Type: ipsec.MECHANISM,
+				Parameters: map[string]string{
+					ipsec.SrcIP:            v.common.EgressInterface.SrcIPNet().IP.String(),
+					mechanisms.MTUOverhead: strconv.Itoa(ipsec.MTUOverhead),
 				},
 			},
 		},

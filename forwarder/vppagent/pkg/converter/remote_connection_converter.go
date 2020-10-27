@@ -16,7 +16,14 @@
 package converter
 
 import (
+	"encoding/binary"
+	"encoding/hex"
 	"math"
+	"strconv"
+
+	vpp_ipsec "go.ligato.io/vpp-agent/v3/proto/ligato/vpp/ipsec"
+
+	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/ipsec"
 
 	vpp_l3 "go.ligato.io/vpp-agent/v3/proto/ligato/vpp/l3"
 
@@ -42,7 +49,7 @@ type RemoteConnectionConverter struct {
 	side    ConnectionContextSide
 }
 
-// NewRemoteConnectionConverter creates a new remote connection coverter
+// NewRemoteConnectionConverter creates a new remote connection converter
 func NewRemoteConnectionConverter(c *connection.Connection, name, tapName string, side ConnectionContextSide) *RemoteConnectionConverter {
 	return &RemoteConnectionConverter{
 		Connection: c,
@@ -53,7 +60,7 @@ func NewRemoteConnectionConverter(c *connection.Connection, name, tapName string
 }
 
 func (c *RemoteConnectionConverter) checkMechanism() bool {
-	mechanisms := []string{vxlan.MECHANISM, srv6.MECHANISM}
+	mechanisms := []string{vxlan.MECHANISM, srv6.MECHANISM, ipsec.MECHANISM}
 	for _, m := range mechanisms {
 		if m == c.GetMechanism().GetType() {
 			return true
@@ -111,6 +118,127 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 				},
 			},
 		})
+	case ipsec.MECHANISM:
+		m := ipsec.ToMechanism(c.GetMechanism())
+
+		srcip, _ := m.SrcIP()
+		dstip, _ := m.DstIP()
+
+		saOutIdx, _ := m.LocalSAOutIndex()
+		saInIdx, _ := m.LocalSAInIndex()
+
+		lSpi, _ := m.LocalSPI()
+		localSpi, _ := hex.DecodeString(lSpi)
+		rSpi, _ := m.RemoteSPI()
+		remoteSpi, _ := hex.DecodeString(rSpi)
+
+		localCryptoKey, _ := m.LocalEncrKey()
+		localIntegKey, _ := m.LocalIntegKey()
+		remoteCryptoKey, _ := m.RemoteEncrKey()
+		remoteIntegKey, _ := m.RemoteIntegKey()
+
+		useEsn, _ := m.UseEsn()
+		enableUdpEncap, _ := m.EnableUdpEncap()
+		vni, _ := m.VNI()
+
+		if c.side == SOURCE {
+			// If the remote Connection is DESTINATION Side then srcip/dstip need to be flipped from the Connection
+			srcip, _ = m.DstIP()
+			dstip, _ = m.SrcIP()
+
+			saOutIdx, _ = m.RemoteSAOutIndex()
+			saInIdx, _ = m.RemoteSAInIndex()
+
+			lSpi, _ := m.RemoteSPI()
+			localSpi, _ = hex.DecodeString(lSpi)
+			rSpi, _ := m.LocalSPI()
+			remoteSpi, _ = hex.DecodeString(rSpi)
+
+			localCryptoKey, _ = m.RemoteEncrKey()
+			localIntegKey, _ = m.RemoteIntegKey()
+			remoteCryptoKey, _ = m.LocalEncrKey()
+			remoteIntegKey, _ = m.LocalIntegKey()
+		}
+
+		rv.VppConfig.Interfaces = append(rv.VppConfig.Interfaces, &vpp.Interface{
+			Name:    c.name,
+			Type:    vpp_interfaces.Interface_VXLAN_TUNNEL,
+			Enabled: true,
+			Link: &vpp_interfaces.Interface_Vxlan{
+				Vxlan: &vpp_interfaces.VxlanLink{
+					SrcAddress: srcip,
+					DstAddress: dstip,
+					Vni:        vni,
+				},
+			},
+		})
+
+		rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
+			Index:          saOutIdx,
+			Spi:            binary.BigEndian.Uint32(localSpi),
+			Protocol:       vpp_ipsec.SecurityAssociation_ESP,
+			CryptoAlg:      vpp_ipsec.CryptoAlg_AES_CBC_128,
+			CryptoKey:      localCryptoKey,
+			IntegAlg:       vpp_ipsec.IntegAlg_SHA1_96,
+			IntegKey:       localIntegKey,
+			UseEsn:         useEsn,
+			EnableUdpEncap: enableUdpEncap,
+		})
+
+		rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
+			Index:          saInIdx,
+			Spi:            binary.BigEndian.Uint32(remoteSpi),
+			Protocol:       vpp_ipsec.SecurityAssociation_ESP,
+			CryptoAlg:      vpp_ipsec.CryptoAlg_AES_CBC_128,
+			CryptoKey:      remoteCryptoKey,
+			IntegAlg:       vpp_ipsec.IntegAlg_SHA1_96,
+			IntegKey:       remoteIntegKey,
+			UseEsn:         useEsn,
+			EnableUdpEncap: enableUdpEncap,
+		})
+
+		idx, _ := strconv.Atoi(c.Id)
+		rv.VppConfig.IpsecSpds = append(rv.VppConfig.IpsecSpds, &vpp_ipsec.SecurityPolicyDatabase{
+			Index: uint32(idx),
+			Interfaces: []*vpp_ipsec.SecurityPolicyDatabase_Interface{
+				{
+					Name: "mgmt",
+				},
+			},
+			PolicyEntries: []*vpp_ipsec.SecurityPolicyDatabase_PolicyEntry{
+				{
+					SaIndex:         saOutIdx,
+					Priority:        10,
+					IsOutbound:      false,
+					RemoteAddrStart: dstip,
+					RemoteAddrStop:  dstip,
+					LocalAddrStart:  srcip,
+					LocalAddrStop:   srcip,
+					RemotePortStart: 0,
+					RemotePortStop:  65535,
+					LocalPortStart:  0,
+					LocalPortStop:   65535,
+					Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
+				},
+				{
+					SaIndex:         saInIdx,
+					Priority:        10,
+					IsOutbound:      true,
+					RemoteAddrStart: dstip,
+					RemoteAddrStop:  dstip,
+					LocalAddrStart:  srcip,
+					LocalAddrStop:   srcip,
+					RemotePortStart: 0,
+					RemotePortStop:  65535,
+					LocalPortStart:  0,
+					LocalPortStop:   65535,
+					Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
+				},
+			},
+		})
+
+		logrus.Infof("m.GetParameters()[%s]: %+v", m)
+
 	case srv6.MECHANISM:
 		m := srv6.ToMechanism(c.GetMechanism())
 

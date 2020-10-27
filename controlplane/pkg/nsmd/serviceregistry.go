@@ -19,10 +19,12 @@ import (
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/nsmdapi"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
+	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/ipsec"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/sid"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/vni"
+
 	forwarderapi "github.com/networkservicemesh/networkservicemesh/forwarder/api/forwarder"
 	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
 )
@@ -60,6 +62,7 @@ type nsmdServiceRegistry struct {
 	stopRedial               bool
 	vniAllocator             vni.VniAllocator
 	sidAllocator             sid.Allocator
+	ipsecAllocator           ipsec.Allocator
 	registryAddress          string
 }
 
@@ -224,6 +227,7 @@ func NewServiceRegistryAt(nsmAddress string) serviceregistry.ServiceRegistry {
 		stopRedial:      true,
 		vniAllocator:    vni.NewVniAllocator(),
 		sidAllocator:    sid.NewSIDAllocator(),
+		ipsecAllocator:  ipsec.NewAllocator(),
 		registryAddress: nsmAddress,
 	}
 }
@@ -256,6 +260,10 @@ func (impl *nsmdServiceRegistry) VniAllocator() vni.VniAllocator {
 
 func (impl *nsmdServiceRegistry) SIDAllocator() sid.Allocator {
 	return impl.sidAllocator
+}
+
+func (impl *nsmdServiceRegistry) IPSecAllocator() ipsec.Allocator {
+	return impl.ipsecAllocator
 }
 
 type defaultWorkspaceProvider struct {

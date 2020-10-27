@@ -10,7 +10,7 @@ pullPolicy: IfNotPresent
 
 forwardingPlane: vpp
 insecure: false
-preferredRemoteMechanism:
+preferredRemoteMechanism: VXLAN
 
 vpp:
   image: vppagent-forwarder

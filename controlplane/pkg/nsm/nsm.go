@@ -371,7 +371,16 @@ func (srv *networkServiceManager) getConnectionParameters(xcon *crossconnect.Cro
 			} else {
 				srv.serviceRegistry.SIDAllocator().Restore(hardwareAddress, srcLocalSID)
 			}
-			// Add other mechanisms support here
+			// do something for ipsec
+			// ======================
+			//case ipsec.MECHANISM:
+			//m := ipsec.ToMechanism(mm)
+			//_, err := m.SrcIP()
+			//_, err2 := m.DstIP()
+			//_, err3 := m.SAOutIndex()
+			//if err != nil || err2 != nil || err3 != nil {
+			//	logrus.Errorf("Error retrieving SRC/DST IP or VNI from Remote connection %v %v", err, err2)
+			//}
 		}
 	}
 	return connectionState, networkServiceName, endpointName
