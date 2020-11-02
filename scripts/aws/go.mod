@@ -1,4 +1,4 @@
-module github.com/cisco-app-networking/networkservicemesh/scripts/aws
+module cisco-app-networking.github.io/networkservicemesh/scripts/aws
 
 go 1.13
 

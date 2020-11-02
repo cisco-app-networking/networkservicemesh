@@ -1,4 +1,4 @@
-module github.com/cisco-app-networking/networkservicemesh/k8s/pkg/apis
+module cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis
 
 go 1.13
 
