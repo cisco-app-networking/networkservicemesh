@@ -20,6 +20,7 @@ import (
 	"encoding/hex"
 	"math"
 	"strconv"
+	"sync"
 
 	vpp_ipsec "go.ligato.io/vpp-agent/v3/proto/ligato/vpp/ipsec"
 
@@ -42,7 +43,8 @@ import (
 )
 
 var (
-	HACK_RemoteAlreadyConnected = false
+	ipsecSAPeerMutex = sync.RWMutex{}
+	ipsecSAPeers = map[string]bool{}
 )
 
 // RemoteConnectionConverter described the remote connection
@@ -51,6 +53,18 @@ type RemoteConnectionConverter struct {
 	name    string
 	tapName string
 	side    ConnectionContextSide
+}
+
+func ipsecSAPeerExists(srcIp string) bool {
+	ipsecSAPeerMutex.RLock()
+	_,present := ipsecSAPeers[srcIp]
+	ipsecSAPeerMutex.RUnlock()
+	return present
+}
+func ipsecSAPeerAdd(srcIp string) {
+	ipsecSAPeerMutex.Lock()
+	ipsecSAPeers[srcIp] = true
+	ipsecSAPeerMutex.Unlock()
 }
 
 // NewRemoteConnectionConverter creates a new remote connection converter
@@ -124,7 +138,7 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 		})
 	case ipsec.MECHANISM:
 		m := ipsec.ToMechanism(c.GetMechanism())
-		logrus.Infof("CrossConnectConverter--connecting to remote")
+
 		srcip, _ := m.SrcIP()
 		dstip, _ := m.DstIP()
 
@@ -175,9 +189,9 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 				},
 			},
 		})
-
-		if HACK_RemoteAlreadyConnected {
-			logrus.Infof("CrossConnectConverter--remote already connected")
+		logrus.Infof("CrossConnectConverter--connecting to peer %s", dstip)
+		if  ipsecSAPeerExists(dstip) {
+			logrus.Infof("CrossConnectConverter--IPSec security association exists with peer: %s", dstip)
 		} else {
 			rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
 				Index:          saOutIdx,
@@ -242,7 +256,8 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 					},
 				},
 			})
-			HACK_RemoteAlreadyConnected = true
+			logrus.Infof("CrossConnectConverter--adding IPSec security association with peer: %s", dstip)
+			ipsecSAPeerAdd(dstip)
 		}
 
 		logrus.Infof("m.GetParameters()[%s]: %+v", m)
