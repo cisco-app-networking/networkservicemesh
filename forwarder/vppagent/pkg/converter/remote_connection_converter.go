@@ -41,6 +41,10 @@ import (
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
 )
 
+var (
+	HACK_RemoteAlreadyConnected = false
+)
+
 // RemoteConnectionConverter described the remote connection
 type RemoteConnectionConverter struct {
 	*connection.Connection
@@ -120,7 +124,7 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 		})
 	case ipsec.MECHANISM:
 		m := ipsec.ToMechanism(c.GetMechanism())
-
+		logrus.Infof("CrossConnectConverter--connecting to remote")
 		srcip, _ := m.SrcIP()
 		dstip, _ := m.DstIP()
 
@@ -140,7 +144,6 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 		useEsn, _ := m.UseEsn()
 		enableUdpEncap, _ := m.EnableUdpEncap()
 		vni, _ := m.VNI()
-
 		if c.side == SOURCE {
 			// If the remote Connection is DESTINATION Side then srcip/dstip need to be flipped from the Connection
 			srcip, _ = m.DstIP()
@@ -173,69 +176,74 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 			},
 		})
 
-		rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
-			Index:          saOutIdx,
-			Spi:            binary.BigEndian.Uint32(localSpi),
-			Protocol:       vpp_ipsec.SecurityAssociation_ESP,
-			CryptoAlg:      vpp_ipsec.CryptoAlg_AES_CBC_128,
-			CryptoKey:      localCryptoKey,
-			IntegAlg:       vpp_ipsec.IntegAlg_SHA1_96,
-			IntegKey:       localIntegKey,
-			UseEsn:         useEsn,
-			EnableUdpEncap: enableUdpEncap,
-		})
+		if HACK_RemoteAlreadyConnected {
+			logrus.Infof("CrossConnectConverter--remote already connected")
+		} else {
+			rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
+				Index:          saOutIdx,
+				Spi:            binary.BigEndian.Uint32(localSpi),
+				Protocol:       vpp_ipsec.SecurityAssociation_ESP,
+				CryptoAlg:      vpp_ipsec.CryptoAlg_AES_CBC_128,
+				CryptoKey:      localCryptoKey,
+				IntegAlg:       vpp_ipsec.IntegAlg_SHA1_96,
+				IntegKey:       localIntegKey,
+				UseEsn:         useEsn,
+				EnableUdpEncap: enableUdpEncap,
+			})
 
-		rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
-			Index:          saInIdx,
-			Spi:            binary.BigEndian.Uint32(remoteSpi),
-			Protocol:       vpp_ipsec.SecurityAssociation_ESP,
-			CryptoAlg:      vpp_ipsec.CryptoAlg_AES_CBC_128,
-			CryptoKey:      remoteCryptoKey,
-			IntegAlg:       vpp_ipsec.IntegAlg_SHA1_96,
-			IntegKey:       remoteIntegKey,
-			UseEsn:         useEsn,
-			EnableUdpEncap: enableUdpEncap,
-		})
+			rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
+				Index:          saInIdx,
+				Spi:            binary.BigEndian.Uint32(remoteSpi),
+				Protocol:       vpp_ipsec.SecurityAssociation_ESP,
+				CryptoAlg:      vpp_ipsec.CryptoAlg_AES_CBC_128,
+				CryptoKey:      remoteCryptoKey,
+				IntegAlg:       vpp_ipsec.IntegAlg_SHA1_96,
+				IntegKey:       remoteIntegKey,
+				UseEsn:         useEsn,
+				EnableUdpEncap: enableUdpEncap,
+			})
 
-		idx, _ := strconv.Atoi(c.Id)
-		rv.VppConfig.IpsecSpds = append(rv.VppConfig.IpsecSpds, &vpp_ipsec.SecurityPolicyDatabase{
-			Index: uint32(idx),
-			Interfaces: []*vpp_ipsec.SecurityPolicyDatabase_Interface{
-				{
-					Name: "mgmt",
+			idx, _ := strconv.Atoi(c.Id)
+			rv.VppConfig.IpsecSpds = append(rv.VppConfig.IpsecSpds, &vpp_ipsec.SecurityPolicyDatabase{
+				Index: uint32(idx),
+				Interfaces: []*vpp_ipsec.SecurityPolicyDatabase_Interface{
+					{
+						Name: "mgmt",
+					},
 				},
-			},
-			PolicyEntries: []*vpp_ipsec.SecurityPolicyDatabase_PolicyEntry{
-				{
-					SaIndex:         saOutIdx,
-					Priority:        10,
-					IsOutbound:      false,
-					RemoteAddrStart: dstip,
-					RemoteAddrStop:  dstip,
-					LocalAddrStart:  srcip,
-					LocalAddrStop:   srcip,
-					RemotePortStart: 0,
-					RemotePortStop:  65535,
-					LocalPortStart:  0,
-					LocalPortStop:   65535,
-					Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
+				PolicyEntries: []*vpp_ipsec.SecurityPolicyDatabase_PolicyEntry{
+					{
+						SaIndex:         saOutIdx,
+						Priority:        10,
+						IsOutbound:      false,
+						RemoteAddrStart: dstip,
+						RemoteAddrStop:  dstip,
+						LocalAddrStart:  srcip,
+						LocalAddrStop:   srcip,
+						RemotePortStart: 0,
+						RemotePortStop:  65535,
+						LocalPortStart:  0,
+						LocalPortStop:   65535,
+						Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
+					},
+					{
+						SaIndex:         saInIdx,
+						Priority:        10,
+						IsOutbound:      true,
+						RemoteAddrStart: dstip,
+						RemoteAddrStop:  dstip,
+						LocalAddrStart:  srcip,
+						LocalAddrStop:   srcip,
+						RemotePortStart: 0,
+						RemotePortStop:  65535,
+						LocalPortStart:  0,
+						LocalPortStop:   65535,
+						Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
+					},
 				},
-				{
-					SaIndex:         saInIdx,
-					Priority:        10,
-					IsOutbound:      true,
-					RemoteAddrStart: dstip,
-					RemoteAddrStop:  dstip,
-					LocalAddrStart:  srcip,
-					LocalAddrStop:   srcip,
-					RemotePortStart: 0,
-					RemotePortStop:  65535,
-					LocalPortStart:  0,
-					LocalPortStop:   65535,
-					Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
-				},
-			},
-		})
+			})
+			HACK_RemoteAlreadyConnected = true
+		}
 
 		logrus.Infof("m.GetParameters()[%s]: %+v", m)
 

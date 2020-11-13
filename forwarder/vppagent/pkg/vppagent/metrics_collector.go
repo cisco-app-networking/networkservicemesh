@@ -66,7 +66,7 @@ func (m *MetricsCollector) startListenNotifications(monitor metrics.MetricsMonit
 			if vppStats.Interface != nil {
 				monitor.HandleMetrics(convertStatistics(vppStats.Interface))
 			}
-			logrus.Infof("MetricsCollector: GetStats(): %v", vppStats)
+			logrus.Debugf("MetricsCollector: GetStats(): %v", vppStats)
 		}
 
 		<-time.After(m.requestPeriod)

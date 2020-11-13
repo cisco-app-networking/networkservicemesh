@@ -37,7 +37,7 @@ func (c *clearMechanisms) Request(ctx context.Context, crossConnect *crossconnec
 	}
 	entity := monitor.Entities()[crossConnect.GetId()]
 	if entity == nil {
-		logrus.Infof("montir has not entry with id %v", crossConnect.GetId())
+		logrus.Infof("monitor has no entry with id %v", crossConnect.GetId())
 		return nextRequest(ctx, crossConnect)
 	}
 	clearDataChange, err := converter.NewCrossConnectConverter(entity.(*crossconnect.CrossConnect), conversionParameters).MechanismsToDataRequest(nil, false)
