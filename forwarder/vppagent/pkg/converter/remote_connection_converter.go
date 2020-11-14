@@ -56,15 +56,18 @@ type RemoteConnectionConverter struct {
 }
 
 func ipsecSAPeerExists(srcIp string) bool {
-	ipsecSAPeerMutex.RLock()
+	ipsecSAPeerMutex.Lock()
 	_,present := ipsecSAPeers[srcIp]
-	ipsecSAPeerMutex.RUnlock()
+	if !present {
+		ipsecSAPeerAdd(srcIp)
+	}
+	ipsecSAPeerMutex.Unlock()
 	return present
 }
 func ipsecSAPeerAdd(srcIp string) {
-	ipsecSAPeerMutex.Lock()
+	//ipsecSAPeerMutex.Lock()
 	ipsecSAPeers[srcIp] = true
-	ipsecSAPeerMutex.Unlock()
+	//ipsecSAPeerMutex.Unlock()
 }
 
 // NewRemoteConnectionConverter creates a new remote connection converter
@@ -223,41 +226,41 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 				Interfaces: []*vpp_ipsec.SecurityPolicyDatabase_Interface{
 					{
 						Name: "mgmt",
-					},
-				},
-				PolicyEntries: []*vpp_ipsec.SecurityPolicyDatabase_PolicyEntry{
-					{
-						SaIndex:         saOutIdx,
-						Priority:        10,
-						IsOutbound:      false,
-						RemoteAddrStart: dstip,
-						RemoteAddrStop:  dstip,
-						LocalAddrStart:  srcip,
-						LocalAddrStop:   srcip,
-						RemotePortStart: 0,
-						RemotePortStop:  65535,
-						LocalPortStart:  0,
-						LocalPortStop:   65535,
-						Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
-					},
-					{
-						SaIndex:         saInIdx,
-						Priority:        10,
-						IsOutbound:      true,
-						RemoteAddrStart: dstip,
-						RemoteAddrStop:  dstip,
-						LocalAddrStart:  srcip,
-						LocalAddrStop:   srcip,
-						RemotePortStart: 0,
-						RemotePortStop:  65535,
-						LocalPortStart:  0,
-						LocalPortStop:   65535,
-						Action:          vpp_ipsec.SecurityPolicyDatabase_PolicyEntry_PROTECT,
+						//Name: c.name,
 					},
 				},
 			})
+			rv.VppConfig.IpsecSps = append(rv.VppConfig.IpsecSps, &vpp_ipsec.SecurityPolicy{
+				SpdIndex:		 uint32(idx),
+				SaIndex:         saOutIdx,
+				Priority:        10,
+				IsOutbound:      false,
+				RemoteAddrStart: dstip,
+				RemoteAddrStop:  dstip,
+				LocalAddrStart:  srcip,
+				LocalAddrStop:   srcip,
+				RemotePortStart: 0,
+				RemotePortStop:  65535,
+				LocalPortStart:  0,
+				LocalPortStop:   65535,
+				Action:          vpp_ipsec.SecurityPolicy_PROTECT,
+				})
+			rv.VppConfig.IpsecSps = append(rv.VppConfig.IpsecSps, &vpp_ipsec.SecurityPolicy{
+				SpdIndex:		 uint32(idx),
+				SaIndex:         saInIdx,
+				Priority:        10,
+				IsOutbound:      true,
+				RemoteAddrStart: dstip,
+				RemoteAddrStop:  dstip,
+				LocalAddrStart:  srcip,
+				LocalAddrStop:   srcip,
+				RemotePortStart: 0,
+				RemotePortStop:  65535,
+				LocalPortStart:  0,
+				LocalPortStop:   65535,
+				Action:          vpp_ipsec.SecurityPolicy_PROTECT,
+			})
 			logrus.Infof("CrossConnectConverter--adding IPSec security association with peer: %s", dstip)
-			ipsecSAPeerAdd(dstip)
 		}
 
 		logrus.Infof("m.GetParameters()[%s]: %+v", m)
