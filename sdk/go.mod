@@ -16,7 +16,7 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.5.0
 	github.com/teris-io/shortid v0.0.0-20171029131806-771a37caa5cf
-	go.ligato.io/vpp-agent/v3 v3.1.0
+	go.ligato.io/vpp-agent/v3 v3.2.0
 	google.golang.org/grpc v1.27.1
 )
 
