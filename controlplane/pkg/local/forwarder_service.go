@@ -17,6 +17,7 @@ package local
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/ipsec"
@@ -123,7 +124,9 @@ func (cce *forwarderService) Request(ctx context.Context, request *networkservic
 	span.LogObject("dataplane", dp)
 
 	ctx = common.WithForwarder(ctx, dp)
+	logger.Infof("local/forwarderService: prepareRemoteMechanisms: %v", dp)
 	ctx = common.WithRemoteMechanisms(ctx, cce.prepareRemoteMechanisms(request, dp))
+	logger.Infof("local/forwarderService: done prepareRemoteMechanisms: %v", dp)
 	conn, connErr := common.ProcessNext(ctx, request)
 	if connErr != nil {
 		return conn, connErr
@@ -143,7 +146,7 @@ func (cce *forwarderService) prepareRemoteMechanisms(request *networkservice.Net
 		case srv6.MECHANISM:
 			cce.prepareSRv6Mechanism(m, request)
 		case ipsec.MECHANISM:
-			cce.prepareIPSecMechanism(m)
+			cce.prepareIPSecMechanism(m, request)
 		case wireguard.MECHANISM:
 			cce.prepareWireguardMechanism(m, request)
 		}
@@ -187,7 +190,7 @@ func (cce *forwarderService) prepareWireguardMechanism(m *connection.Mechanism, 
 	return m
 }
 
-func (cce *forwarderService) prepareIPSecMechanism(m *connection.Mechanism) *connection.Mechanism {
+func (cce *forwarderService) prepareIPSecMechanism(m *connection.Mechanism, request *networkservice.NetworkServiceRequest) *connection.Mechanism {
 
 	parameters := m.GetParameters()
 	if parameters == nil {
@@ -195,11 +198,12 @@ func (cce *forwarderService) prepareIPSecMechanism(m *connection.Mechanism) *con
 		m.Parameters = parameters
 	}
 
-	parameters[ipsec.LocalSAInIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
-	parameters[ipsec.LocalSAOutIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
-	parameters[ipsec.LocalEspSPI] = cce.serviceRegistry.IPSecAllocator().GenerateKey(8)
-	parameters[ipsec.LocalIntegKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(20)
-	parameters[ipsec.LocalEncrKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(16)
+	ipsecParams := cce.serviceRegistry.IPSecAllocator().MechanismParams(request.GetConnection().GetContext().GetIpContext().GetDstIpAddr())
+	parameters[ipsec.LocalSAInIndex] = strconv.Itoa(int(ipsecParams.SaInIdx))
+	parameters[ipsec.LocalSAOutIndex] = strconv.Itoa(int(ipsecParams.SaOutIdx))
+	parameters[ipsec.LocalEspSPI] = ipsecParams.LocalEspSPI
+	parameters[ipsec.LocalIntegKey] = ipsecParams.LocalIntegKey
+	parameters[ipsec.LocalEncrKey] = ipsecParams.LocalEncrKey
 
 	mechanisms.SetMTUOverhead(m, ipsec.MTUOverhead)
 

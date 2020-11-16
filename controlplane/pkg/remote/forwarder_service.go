@@ -133,7 +133,7 @@ func (cce *forwarderService) selectRemoteMechanism(request *networkservice.Netwo
 	return mechanism, nil
 }
 
-func (cce *forwarderService) configureVXLANParameters(parameters, dpParameters map[string]string) {
+func (cce *forwarderService) getLocalAndRemoteIp(parameters, dpParameters map[string]string) (localIp, remoteIp string) {
 	parameters[vxlan.DstIP] = dpParameters[vxlan.SrcIP]
 
 	extSrcIP := parameters[vxlan.SrcIP]
@@ -149,12 +149,15 @@ func (cce *forwarderService) configureVXLANParameters(parameters, dpParameters m
 		extDstIP = ip
 	}
 
-	var vni uint32
 	if extDstIP != extSrcIP {
-		vni = cce.serviceRegistry.VniAllocator().Vni(extDstIP, extSrcIP)
-	} else {
-		vni = cce.serviceRegistry.VniAllocator().Vni(dstIP, srcIP)
+		return extDstIP, extSrcIP
 	}
+	return dstIP, srcIP
+}
+
+func (cce *forwarderService) configureVXLANParameters(parameters, dpParameters map[string]string) {
+	localIp, remoteIp := cce.getLocalAndRemoteIp(parameters, dpParameters)
+	vni := cce.serviceRegistry.VniAllocator().Vni(localIp, remoteIp)
 
 	parameters[vxlan.VNI] = strconv.FormatUint(uint64(vni), 10)
 
@@ -189,11 +192,13 @@ func (cce *forwarderService) configureWireguardParameters(connectionID string, p
 func (cce *forwarderService) configureIPSecParameters(parameters, dpParameters map[string]string) {
 	cce.configureVXLANParameters(parameters, dpParameters)
 
-	parameters[ipsec.RemoteSAInIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
-	parameters[ipsec.RemoteSAOutIndex] = cce.serviceRegistry.IPSecAllocator().SAIdx()
-	parameters[ipsec.RemoteEspSPI] = cce.serviceRegistry.IPSecAllocator().GenerateKey(8)
-	parameters[ipsec.RemoteIntegKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(20)
-	parameters[ipsec.RemoteEncrKey] = cce.serviceRegistry.IPSecAllocator().GenerateKey(16)
+	_, remoteIp := cce.getLocalAndRemoteIp(parameters, dpParameters)
+	ipsecParams := cce.serviceRegistry.IPSecAllocator().MechanismParams(remoteIp)
+	parameters[ipsec.RemoteSAInIndex] = strconv.Itoa(int(ipsecParams.SaInIdx))
+	parameters[ipsec.RemoteSAOutIndex] = strconv.Itoa(int(ipsecParams.SaOutIdx))
+	parameters[ipsec.RemoteEspSPI] = ipsecParams.LocalEspSPI
+	parameters[ipsec.RemoteIntegKey] = ipsecParams.LocalIntegKey
+	parameters[ipsec.RemoteEncrKey] = ipsecParams.LocalEncrKey
 
 	mechanisms.SetMTUOverheadParameter(parameters, ipsec.MTUOverhead)
 }
@@ -236,12 +241,14 @@ func (cce *forwarderService) Request(ctx context.Context, request *networkservic
 	}
 
 	// 5. Select a local forwarder and put it into conn object
+	logger.Infof("remote/forwarderService: updateMechanism: %v", dp)
 	err = cce.updateMechanism(request, dp)
 	if err != nil {
 		// 5.1 Close forwarder connection, if had existing one and NSE is closed.
 		cce.doFailureClose(ctx)
 		return nil, errors.Errorf("NSM:(5.1) %v", err)
 	}
+	logger.Infof("remote/forwarderService: done updateMechanism: %v", dp)
 
 	span.LogObject("dataplane", dp)
 

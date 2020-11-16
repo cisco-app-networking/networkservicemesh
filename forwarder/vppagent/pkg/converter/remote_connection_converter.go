@@ -19,7 +19,6 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"math"
-	"strconv"
 	"sync"
 
 	vpp_ipsec "go.ligato.io/vpp-agent/v3/proto/ligato/vpp/ipsec"
@@ -44,7 +43,7 @@ import (
 
 var (
 	ipsecSAPeerMutex = sync.RWMutex{}
-	ipsecSAPeers = map[string]bool{}
+	ipsecSAPeers = map[string]int{}
 )
 
 // RemoteConnectionConverter described the remote connection
@@ -55,19 +54,15 @@ type RemoteConnectionConverter struct {
 	side    ConnectionContextSide
 }
 
-func ipsecSAPeerExists(srcIp string) bool {
+func ipsecSAPeerExists(srcIp string) (int, bool) {
 	ipsecSAPeerMutex.Lock()
-	_,present := ipsecSAPeers[srcIp]
+	offset,present := ipsecSAPeers[srcIp]
 	if !present {
-		ipsecSAPeerAdd(srcIp)
+		offset = len(ipsecSAPeers)
+		ipsecSAPeers[srcIp] = offset
 	}
 	ipsecSAPeerMutex.Unlock()
-	return present
-}
-func ipsecSAPeerAdd(srcIp string) {
-	//ipsecSAPeerMutex.Lock()
-	ipsecSAPeers[srcIp] = true
-	//ipsecSAPeerMutex.Unlock()
+	return offset, present
 }
 
 // NewRemoteConnectionConverter creates a new remote connection converter
@@ -193,9 +188,10 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 			},
 		})
 		logrus.Infof("CrossConnectConverter--connecting to peer %s", dstip)
-		if  ipsecSAPeerExists(dstip) {
+		if  offset, connected := ipsecSAPeerExists(dstip); connected {
 			logrus.Infof("CrossConnectConverter--IPSec security association exists with peer: %s", dstip)
 		} else {
+			logrus.Infof("CrossConnectConverter--adding SAs for peer %s: offset %d", dstip, offset)
 			rv.VppConfig.IpsecSas = append(rv.VppConfig.IpsecSas, &vpp_ipsec.SecurityAssociation{
 				Index:          saOutIdx,
 				Spi:            binary.BigEndian.Uint32(localSpi),
@@ -220,9 +216,11 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 				EnableUdpEncap: enableUdpEncap,
 			})
 
-			idx, _ := strconv.Atoi(c.Id)
+			//idx, _ := strconv.Atoi(c.Id)
+			//idx += offset
 			rv.VppConfig.IpsecSpds = append(rv.VppConfig.IpsecSpds, &vpp_ipsec.SecurityPolicyDatabase{
-				Index: uint32(idx),
+				//Index: uint32(idx),
+				Index: 1,
 				Interfaces: []*vpp_ipsec.SecurityPolicyDatabase_Interface{
 					{
 						Name: "mgmt",
@@ -231,8 +229,9 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 				},
 			})
 			rv.VppConfig.IpsecSps = append(rv.VppConfig.IpsecSps, &vpp_ipsec.SecurityPolicy{
-				SpdIndex:		 uint32(idx),
-				SaIndex:         saOutIdx,
+				//SpdIndex:		 uint32(idx),
+				SpdIndex:        1,
+				SaIndex:         saInIdx,
 				Priority:        10,
 				IsOutbound:      false,
 				RemoteAddrStart: dstip,
@@ -246,8 +245,9 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 				Action:          vpp_ipsec.SecurityPolicy_PROTECT,
 				})
 			rv.VppConfig.IpsecSps = append(rv.VppConfig.IpsecSps, &vpp_ipsec.SecurityPolicy{
-				SpdIndex:		 uint32(idx),
-				SaIndex:         saInIdx,
+				//SpdIndex:		 uint32(idx),
+				SpdIndex:        1,
+				SaIndex:         saOutIdx,
 				Priority:        10,
 				IsOutbound:      true,
 				RemoteAddrStart: dstip,

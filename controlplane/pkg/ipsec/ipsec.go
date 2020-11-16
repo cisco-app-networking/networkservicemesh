@@ -22,7 +22,16 @@ import (
 	"sync/atomic"
 )
 
+type IpsecPeerParams struct {
+	SaOutIdx uint32
+	SaInIdx  uint32
+	LocalEspSPI string
+	LocalIntegKey string
+	LocalEncrKey string
+}
+
 type Allocator interface {
+	MechanismParams(peerIp string) IpsecPeerParams
 	SAIdx() string
 	GenerateKey(uint8) string
 	Restore(local_ip string, remote_ip string, vniId uint32)
@@ -31,13 +40,39 @@ type Allocator interface {
 type allocator struct {
 	saIdxPool sync.Map
 	saIdxLast uint32
+	ipsecSAPeerMutex sync.RWMutex
+	ipsecSAPeers map[string]IpsecPeerParams
 }
 
 func NewAllocator() Allocator {
-	return &allocator{}
+	return &allocator{
+		ipsecSAPeerMutex: sync.RWMutex{},
+		ipsecSAPeers: map[string]IpsecPeerParams{},
+	}
 }
 
-// Vni - Allocate a new VNI, odd if local_ip < remote_ip, even otherwise
+func (a *allocator) MechanismParams(peerIp string) IpsecPeerParams {
+	a.ipsecSAPeerMutex.Lock()
+	ipsecParams,present := a.ipsecSAPeers[peerIp]
+	if !present {
+		offset := len(a.ipsecSAPeers)
+		a.saIdxLast += 1 + uint32(offset)
+		ipsecParams = IpsecPeerParams {
+			SaOutIdx: a.saIdxLast,
+			SaInIdx: a.saIdxLast + 1,
+			LocalEspSPI: a.GenerateKey(8),
+			LocalIntegKey: a.GenerateKey(20),
+			LocalEncrKey: a.GenerateKey(16),
+		}
+		a.saIdxLast += 1
+		 // = len(a.ipsecSAPeers)
+		a.ipsecSAPeers[peerIp] = ipsecParams
+	}
+	a.ipsecSAPeerMutex.Unlock()
+	return ipsecParams
+}
+
+// SA Index - Allocate a new SA Index
 func (a *allocator) SAIdx() string {
 	for {
 		idx := atomic.AddUint32(&a.saIdxLast, 1)
