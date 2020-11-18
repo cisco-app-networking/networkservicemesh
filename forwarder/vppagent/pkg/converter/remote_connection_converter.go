@@ -161,9 +161,6 @@ func (c *RemoteConnectionConverter) ToDataRequest(rv *configurator.Config, conne
 			srcip, _ = m.DstIP()
 			dstip, _ = m.SrcIP()
 
-			saOutIdx, _ = m.RemoteSAOutIndex()
-			saInIdx, _ = m.RemoteSAInIndex()
-
 			lSpi, _ := m.RemoteSPI()
 			localSpi, _ = hex.DecodeString(lSpi)
 			rSpi, _ := m.LocalSPI()

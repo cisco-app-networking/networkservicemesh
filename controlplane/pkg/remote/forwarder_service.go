@@ -192,10 +192,20 @@ func (cce *forwarderService) configureWireguardParameters(connectionID string, p
 func (cce *forwarderService) configureIPSecParameters(parameters, dpParameters map[string]string) {
 	cce.configureVXLANParameters(parameters, dpParameters)
 
-	_, remoteIp := cce.getLocalAndRemoteIp(parameters, dpParameters)
-	ipsecParams := cce.serviceRegistry.IPSecAllocator().MechanismParams(remoteIp)
-	parameters[ipsec.RemoteSAInIndex] = strconv.Itoa(int(ipsecParams.SaInIdx))
-	parameters[ipsec.RemoteSAOutIndex] = strconv.Itoa(int(ipsecParams.SaOutIdx))
+	localIp, remoteIp := cce.getLocalAndRemoteIp(parameters, dpParameters)
+	saInIdx := uint32(0)
+	saOutIdx := uint32(0)
+	if saInIdxstr, err := parameters[ipsec.LocalSAInIndex]; !err {
+		saInIdxInt, _ := strconv.Atoi(saInIdxstr)
+		saInIdx = uint32(saInIdxInt)
+	}
+	if saOutIdxstr, err := parameters[ipsec.LocalSAOutIndex]; !err {
+		saOutIdxInt, _ := strconv.Atoi(saOutIdxstr)
+		saOutIdx = uint32(saOutIdxInt)
+	}
+	ipsecParams := cce.serviceRegistry.IPSecAllocator().MechanismParams(localIp, remoteIp, saInIdx, saOutIdx)
+	parameters[ipsec.LocalSAInIndex] = strconv.Itoa(int(ipsecParams.SaInIdx))
+	parameters[ipsec.LocalSAOutIndex] = strconv.Itoa(int(ipsecParams.SaOutIdx))
 	parameters[ipsec.RemoteEspSPI] = ipsecParams.LocalEspSPI
 	parameters[ipsec.RemoteIntegKey] = ipsecParams.LocalIntegKey
 	parameters[ipsec.RemoteEncrKey] = ipsecParams.LocalEncrKey

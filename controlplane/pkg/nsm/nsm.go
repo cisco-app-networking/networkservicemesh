@@ -25,6 +25,7 @@ import (
 
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
 	mechanismCommon "github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/common"
+	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/ipsec"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/kernel"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/srv6"
 	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/vxlan"
@@ -371,16 +372,28 @@ func (srv *networkServiceManager) getConnectionParameters(xcon *crossconnect.Cro
 			} else {
 				srv.serviceRegistry.SIDAllocator().Restore(hardwareAddress, srcLocalSID)
 			}
-			// do something for ipsec
-			// ======================
-			//case ipsec.MECHANISM:
-			//m := ipsec.ToMechanism(mm)
-			//_, err := m.SrcIP()
-			//_, err2 := m.DstIP()
-			//_, err3 := m.SAOutIndex()
-			//if err != nil || err2 != nil || err3 != nil {
-			//	logrus.Errorf("Error retrieving SRC/DST IP or VNI from Remote connection %v %v", err, err2)
-			//}
+		case ipsec.MECHANISM:
+			m := ipsec.ToMechanism(mm)
+			srcIp, err := m.SrcIP()
+			dstIp, err2 := m.DstIP()
+			if err != nil || err2 != nil {
+				logrus.Errorf("restore ipsec: Error retrieving SRC/DST IP from Remote connection %v %v", err, err2)
+			} else {
+				logrus.Infof("Restoring ipsecParams from SRC %s DST %s", srcIp, dstIp)
+				if localEncrKey, err := m.LocalEncrKey(); err != nil{
+					logrus.Errorf("restore ipsec: Error retrieving encrKey from Remote connection %v %v", err)
+				} else if localIntegKey, err := m.LocalIntegKey(); err != nil{
+					logrus.Errorf("restore ipsec: Error retrieving integKey from Remote connection %v %v", err)
+				} else if saInIdx, err := m.LocalSAInIndex(); err != nil{
+					logrus.Errorf("restore ipsec: Error retrieving SAInIndex from Remote connection %v %v", err)
+				} else if saOutIdx, err := m.LocalSAOutIndex(); err != nil{
+					logrus.Errorf("restore ipsec: Error retrieving SAOutIndex from Remote connection %v %v", err)
+				} else if espSPI, err := m.LocalSPI(); err != nil{
+					logrus.Errorf("restore ipsec: Error retrieving espSPI from Remote connection %v %v", err)
+				} else {
+					srv.serviceRegistry.IPSecAllocator().Restore(srcIp, dstIp, saInIdx, saOutIdx, espSPI, localEncrKey, localIntegKey)
+				}
+			}
 		}
 	}
 	return connectionState, networkServiceName, endpointName

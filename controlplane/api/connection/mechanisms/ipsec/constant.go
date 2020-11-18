@@ -19,6 +19,9 @@ const (
 	DstExternalIP = common.DstExternalIP
 	// Protocol
 	Protocol = "protocol"
+	// available SA pool for remote to choose from
+	SAIndexPoolStart = "SAIndexPoolStart"
+	SAIndexPoolEnd = "SAIndexPoolEnd"
 	// LocalSAOutIndex
 	LocalSAOutIndex = "localSAOutIdx"
 	// LocalSAInIndex
@@ -49,5 +52,5 @@ const (
 	UseESN = "useEsn"
 
 	// MTUOverhead - maximum transmission unit overhead for VXLAN encapsulation
-	MTUOverhead = 50
+	MTUOverhead = 70
 )

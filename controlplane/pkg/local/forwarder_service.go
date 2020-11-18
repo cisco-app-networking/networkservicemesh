@@ -198,7 +198,7 @@ func (cce *forwarderService) prepareIPSecMechanism(m *connection.Mechanism, requ
 		m.Parameters = parameters
 	}
 
-	ipsecParams := cce.serviceRegistry.IPSecAllocator().MechanismParams(request.GetConnection().GetContext().GetIpContext().GetDstIpAddr())
+	ipsecParams := cce.serviceRegistry.IPSecAllocator().MechanismParams(request.GetConnection().GetContext().GetIpContext().GetSrcIpAddr(), request.GetConnection().GetContext().GetIpContext().GetDstIpAddr(), 0, 0)
 	parameters[ipsec.LocalSAInIndex] = strconv.Itoa(int(ipsecParams.SaInIdx))
 	parameters[ipsec.LocalSAOutIndex] = strconv.Itoa(int(ipsecParams.SaOutIdx))
 	parameters[ipsec.LocalEspSPI] = ipsecParams.LocalEspSPI
