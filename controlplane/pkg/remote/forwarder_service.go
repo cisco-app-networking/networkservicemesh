@@ -195,11 +195,11 @@ func (cce *forwarderService) configureIPSecParameters(parameters, dpParameters m
 	localIp, remoteIp := cce.getLocalAndRemoteIp(parameters, dpParameters)
 	saInIdx := uint32(0)
 	saOutIdx := uint32(0)
-	if saInIdxstr, err := parameters[ipsec.LocalSAInIndex]; !err {
+	if saInIdxstr, present := parameters[ipsec.LocalSAInIndex]; present {
 		saInIdxInt, _ := strconv.Atoi(saInIdxstr)
 		saInIdx = uint32(saInIdxInt)
 	}
-	if saOutIdxstr, err := parameters[ipsec.LocalSAOutIndex]; !err {
+	if saOutIdxstr, present := parameters[ipsec.LocalSAOutIndex]; present {
 		saOutIdxInt, _ := strconv.Atoi(saOutIdxstr)
 		saOutIdx = uint32(saOutIdxInt)
 	}

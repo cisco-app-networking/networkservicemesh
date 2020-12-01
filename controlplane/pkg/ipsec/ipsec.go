@@ -17,7 +17,16 @@ package ipsec
 import (
 	"crypto/rand"
 	"fmt"
+	"hash/fnv"
 	"sync"
+)
+
+/* IPSec param allocation via singleton pattern */
+var (
+	ipsecAllocMu = &sync.Mutex{}
+	saIdxLast = uint32(1)
+	saIdxPool = map[uint32]string{}
+	ipsecSAPeers = map[string]*IpsecPeerParams{}
 )
 
 type IpsecPeerParams struct {
@@ -29,49 +38,119 @@ type IpsecPeerParams struct {
 }
 
 type Allocator interface {
-	MechanismParams(srcIp, destIp string, saInIdx, saOutIdx uint32) IpsecPeerParams
+	MechanismParams(srcIp, destIp string, saInIdx, saOutIdx uint32) *IpsecPeerParams
 	//SAIdx() string
 	GenerateKey(uint8) string
 	Restore(localIP, remoteIP string, saInIdx, saOutIdx uint32, espSPI, encrKey, integKey string)
 }
 
 type allocator struct {
-	ipsecSAPeerMutex sync.RWMutex
-	saIdxPool map[uint32]bool
-	saIdxLast uint32
-	ipsecSAPeers map[string]IpsecPeerParams
+	//ipsecSAPeerMutex sync.Mutex
+	//saIdxPool map[uint32]bool
+}
+
+/*func init() {
+	saIdxPool = map[uint32]bool{}
+	saIdxLast = 1
+	ipsecSAPeers = map[string]*IpsecPeerParams{}
+}*/
+
+func hash(s string) uint32 {
+	h := fnv.New32a()
+	h.Write([]byte(s))
+	return h.Sum32()
+}
+
+func ipPairTuple(ip1, ip2 string) string{
+	return ip1 + "/" + ip2
+}
+
+func saIdxPoolInsert(idx uint32, srcDestTuple string) {
+	saIdxPool[idx] = srcDestTuple
+}
+
+func getSaIdxPool(srcIp, destIp string, saInIdx, saOutIdx uint32) *IpsecPeerParams {
+	ipPair1 := ipPairTuple(srcIp, destIp)
+	ipPair2 := ipPairTuple(destIp, srcIp)
+	inIpPair, inPresent := saIdxPool[saInIdx]
+	if inPresent && (inIpPair == ipPair1 || inIpPair == ipPair2) {
+		outIpPair, outPresent := saIdxPool[saOutIdx]
+		if outPresent && (outIpPair == ipPair1 || outIpPair == ipPair2) {
+			saPeer, peerPresent := ipsecSAPeers[ipPair1]
+			if peerPresent {
+				return saPeer
+			}
+		}
+	}
+	return nil
 }
 
 func NewAllocator() Allocator {
 	return &allocator{
-		ipsecSAPeerMutex: sync.RWMutex{},
-		ipsecSAPeers: map[string]IpsecPeerParams{},
 	}
 }
 
-func (a *allocator) MechanismParams(srcIp, destIp string, saInIdx, saOutIdx uint32) IpsecPeerParams {
-	a.ipsecSAPeerMutex.Lock()
-	defer a.ipsecSAPeerMutex.Unlock()
+func (a *allocator) checkInitSAIdx() {
+	if saIdxLast == 0 {
+		// start the allocation from 1
+		saIdxLast = 1
+	}
+}
+
+func (a *allocator) checkUpdateSAIdxLast(saIdx uint32) {
+	if saIdxLast <= saIdx {
+		saIdxLast = saIdx
+		saIdxLast += 1
+	}
+}
+
+func (a *allocator) MechanismParams(srcIp, destIp string, saInIdx, saOutIdx uint32) *IpsecPeerParams {
+	ipsecAllocMu.Lock()
+	defer ipsecAllocMu.Unlock()
+	//a.checkInitSAIdx()
+	//a.checkUpdateSAIdxLast(saOutIdx)
+	//a.checkUpdateSAIdxLast(saInIdx)
+
+	/*
+	allocSaOutIdx := saOutIdx
+	if allocSaOutIdx < saIdxLast {
+		allocSaOutIdx = saIdxLast
+		saIdxLast += 1
+	} else {
+		saIdxLast = allocSaOutIdx + 1
+	}
+	allocSaInIdx := saInIdx
+	if allocSaInIdx < saIdxLast {
+		allocSaInIdx = saIdxLast
+		saIdxLast += 1
+	} else {
+		saIdxLast = allocSaInIdx + 1
+	}
+	*/
 	// Hack because we can't tell whether we're src or dest
 	srcdest := srcIp + "/" + destIp
 	destsrc := destIp + "/" + srcIp
-	ipsecParams,present := a.ipsecSAPeers[srcdest]
+	/* Assume hash of srcdest & destsrc will be unique for the pool of connections */
+	srcDestH := hash (srcdest)
+	destSrcH := hash (destsrc)
+	allocSaInIdx := srcDestH
+	allocSaOutIdx := destSrcH
+	if saInIdx == 0 && saOutIdx == 0 {
+		allocSaInIdx = srcDestH
+		allocSaOutIdx = destSrcH
+	} else if saInIdx == destSrcH {
+		allocSaInIdx = destSrcH
+		allocSaOutIdx = srcDestH
+	} else if saInIdx == srcDestH {
+		allocSaInIdx = srcDestH
+		allocSaOutIdx = destSrcH
+	}
+
+	ipsecParams,present := ipsecSAPeers[srcdest]
 	if !present {
-		ipsecParams, present = a.ipsecSAPeers[destsrc]
+		ipsecParams, present = ipsecSAPeers[destsrc]
 		if !present {
-			allocSaOutIdx := a.saIdxLast
-			if allocSaOutIdx < saOutIdx {
-				allocSaOutIdx = saOutIdx
-				a.saIdxLast = saOutIdx
-			}
-			a.saIdxLast += 1
-			allocSaInIdx := a.saIdxLast
-			if allocSaInIdx < saInIdx {
-				allocSaInIdx = saInIdx
-				a.saIdxLast = saInIdx
-			}
-			a.saIdxLast += 1
-			ipsecParams = IpsecPeerParams{
+			ipsecParams = &IpsecPeerParams{
 				SaOutIdx:      allocSaOutIdx,
 				SaInIdx:       allocSaInIdx,
 				LocalEspSPI:   a.GenerateKey(8),
@@ -79,10 +158,17 @@ func (a *allocator) MechanismParams(srcIp, destIp string, saInIdx, saOutIdx uint
 				LocalEncrKey:  a.GenerateKey(16),
 			}
 			// = len(a.ipsecSAPeers)
-			a.ipsecSAPeers[srcdest] = ipsecParams
-			a.ipsecSAPeers[destsrc] = ipsecParams
+			ipsecSAPeers[srcdest] = ipsecParams
+			ipsecSAPeers[destsrc] = ipsecParams
 		}
 	}
+	// ensure we adjust SA Index values if any passed in
+	/*
+	if saOutIdx != 0 || saInIdx != 0 {
+		ipsecSAPeers[srcdest].SaOutIdx = allocSaOutIdx
+		ipsecSAPeers[destsrc].SaInIdx = allocSaInIdx
+	}
+	*/
 	return ipsecParams
 }
 
@@ -109,24 +195,20 @@ func (a *allocator) GenerateKey(size uint8) string {
 
 // Restore value of last Vni based on connections we have at the moment.
 func (a *allocator) Restore(localIP, remoteIP string, saInIdx, saOutIdx uint32, espSPI, encrKey, integKey string) {
-	a.ipsecSAPeerMutex.Lock()
-	defer a.ipsecSAPeerMutex.Unlock()
+	ipsecAllocMu.Lock()
+	defer ipsecAllocMu.Unlock()
 	// Hack because we can't tell whether we're src or dest
 	srcdest := localIP + "/" + remoteIP
 	destsrc := remoteIP + "/" + localIP
-	ipsecParams := IpsecPeerParams{
+	ipsecParams := &IpsecPeerParams{
 		SaOutIdx:      saOutIdx,
 		SaInIdx:       saInIdx,
 		LocalEspSPI:   espSPI,
 		LocalIntegKey: integKey,
 		LocalEncrKey:  encrKey,
 	}
-	a.ipsecSAPeers[srcdest] = ipsecParams
-	a.ipsecSAPeers[destsrc] = ipsecParams
-	if a.saIdxLast < saOutIdx {
-		a.saIdxLast = saOutIdx
-	}
-	if a.saIdxLast < saInIdx {
-		a.saIdxLast = saInIdx
-	}
+	ipsecSAPeers[srcdest] = ipsecParams
+	ipsecSAPeers[destsrc] = ipsecParams
+	a.checkUpdateSAIdxLast(saOutIdx)
+	a.checkUpdateSAIdxLast(saInIdx)
 }
