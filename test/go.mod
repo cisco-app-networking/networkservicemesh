@@ -1,4 +1,4 @@
-module github.com/cisco-app-networking/networkservicemesh/test
+module cisco-app-networking.github.io/networkservicemesh/test
 
 go 1.13
 

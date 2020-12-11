@@ -1,9 +1,9 @@
-module github.com/cisco-app-networking/networkservicemesh/k8s
+module cisco-app-networking.github.io/networkservicemesh/k8s
 
 go 1.13
 
 require (
-	github.com/golang/protobuf v1.3.3
+	github.com/golang/protobuf v1.4.2
 	github.com/networkservicemesh/networkservicemesh/controlplane v0.0.0-00010101000000-000000000000
 	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.3.0
 	github.com/networkservicemesh/networkservicemesh/k8s v0.0.0-00010101000000-000000000000
@@ -11,11 +11,11 @@ require (
 	github.com/networkservicemesh/networkservicemesh/pkg v0.3.0
 	github.com/networkservicemesh/networkservicemesh/sdk v0.0.0-00010101000000-000000000000
 	github.com/networkservicemesh/networkservicemesh/utils v0.3.0
-	github.com/onsi/gomega v1.7.0
+	github.com/onsi/gomega v1.10.3
 	github.com/pkg/errors v0.9.1
-	github.com/sirupsen/logrus v1.4.2
-	golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa
-	google.golang.org/grpc v1.27.1
+	github.com/sirupsen/logrus v1.6.0
+	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0
+	google.golang.org/grpc v1.29.1
 	k8s.io/api v0.18.1
 	k8s.io/apimachinery v0.18.1
 	k8s.io/client-go v11.0.0+incompatible
