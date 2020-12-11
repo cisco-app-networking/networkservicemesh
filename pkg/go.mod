@@ -21,5 +21,6 @@ replace (
 	github.com/census-instrumentation/opencensus-proto v0.1.0-0.20181214143942-ba49f56771b8 => github.com/census-instrumentation/opencensus-proto v0.0.3-0.20181214143942-ba49f56771b8
 	github.com/codahale/hdrhistogram => github.com/HdrHistogram/hdrhistogram-go v0.9.0
 	github.com/networkservicemesh/networkservicemesh/pkg => ./
+	github.com/networkservicemesh/networkservicemesh/pkg v0.0.0-00010101000000-000000000000 => ./
 	github.com/uber-go/atomic => go.uber.org/atomic v1.6.0
 )
