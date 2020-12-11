@@ -3,13 +3,11 @@ module cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis
 go 1.13
 
 require (
-	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis v0.0.0-00010101000000-000000000000
 	k8s.io/apimachinery v0.18.1
 )
 
 replace (
 	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis => ./
-	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis v0.0.0-00010101000000-000000000000 => ./
 	k8s.io/api => k8s.io/api v0.18.1
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.18.1
 	k8s.io/apimachinery => k8s.io/apimachinery v0.18.2-beta.0
