@@ -4,6 +4,13 @@ go 1.13
 
 require (
 	github.com/golang/protobuf v1.4.2
+	github.com/networkservicemesh/networkservicemesh/controlplane v0.0.0-00010101000000-000000000000
+	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.3.0
+	github.com/networkservicemesh/networkservicemesh/forwarder/api v0.0.0-00010101000000-000000000000 // indirect
+	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis v0.0.0-00010101000000-000000000000
+	github.com/networkservicemesh/networkservicemesh/pkg v0.0.0-00010101000000-000000000000
+	github.com/networkservicemesh/networkservicemesh/sdk v0.0.0-00010101000000-000000000000
+	github.com/networkservicemesh/networkservicemesh/utils v0.0.0-00010101000000-000000000000
 	github.com/onsi/gomega v1.10.3
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.6.0
@@ -49,15 +56,12 @@ replace (
 )
 
 replace (
-	github.com/networkservicemesh/networkservicemesh => ../
-	github.com/networkservicemesh/networkservicemesh/controlplane => ../controlplane
-	github.com/networkservicemesh/networkservicemesh/controlplane/api => ../controlplane/api
-	github.com/networkservicemesh/networkservicemesh/forwarder => ../forwarder
-	github.com/networkservicemesh/networkservicemesh/forwarder/api => ../forwarder/api
+	github.com/networkservicemesh/networkservicemesh/controlplane => cisco-app-networking.github.io/networkservicemesh/controlplane latest
+	github.com/networkservicemesh/networkservicemesh/controlplane/api => cisco-app-networking.github.io/networkservicemesh/controlplane/api latest
+	github.com/networkservicemesh/networkservicemesh/forwarder/api => cisco-app-networking.github.io/networkservicemesh/forwarder/api latest
 	github.com/networkservicemesh/networkservicemesh/k8s => ./
-	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis => ./pkg/apis
-	github.com/networkservicemesh/networkservicemesh/pkg => ../pkg
-	github.com/networkservicemesh/networkservicemesh/sdk => ../sdk
-	github.com/networkservicemesh/networkservicemesh/side-cars => ../side-cars
-	github.com/networkservicemesh/networkservicemesh/utils => ../utils
+	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis => cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis latest
+	github.com/networkservicemesh/networkservicemesh/pkg => cisco-app-networking.github.io/networkservicemesh/pkg latest
+	github.com/networkservicemesh/networkservicemesh/sdk => cisco-app-networking.github.io/networkservicemesh/sdk latest
+	github.com/networkservicemesh/networkservicemesh/utils => cisco-app-networking.github.io/networkservicemesh/utils latest
 )
