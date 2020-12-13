@@ -18,7 +18,7 @@
 package wireguard
 
 import (
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/common"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/common"
 )
 
 const (

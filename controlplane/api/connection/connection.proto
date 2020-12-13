@@ -22,7 +22,7 @@ package connection;
 option go_package = "connection";
 
 import "ptypes/timestamp/timestamp.proto";
-import "github.com/networkservicemesh/networkservicemesh/controlplane/api/connectioncontext/connectioncontext.proto";
+import "cisco-app-networking.github.io/networkservicemesh/controlplane/api/connectioncontext/connectioncontext.proto";
 
 message Mechanism {
   string cls = 1;

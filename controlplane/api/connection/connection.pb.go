@@ -8,7 +8,7 @@ import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	timestamp "github.com/golang/protobuf/ptypes/timestamp"
-	connectioncontext "github.com/networkservicemesh/networkservicemesh/controlplane/api/connectioncontext"
+	connectioncontext "cisco-app-networking.github.io/networkservicemesh/controlplane/api/connectioncontext"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
