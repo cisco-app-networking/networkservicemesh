@@ -1,4 +1,5 @@
-cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.7/go.mod h1:l9y75W7sH2/5VjYFAyF1RrrPzs460dJtDdUBmUJDujg=
+cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10 h1:YD7QxYOGmLSnuKyGa7/9OZ99mafAHpCgskgwOL1Hhqo=
+cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10/go.mod h1:hDsoX1EvZWQoYD/fkbrgfhGCPvMU1AhMcWzhvOXVrUY=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
