@@ -1,4 +1,5 @@
-cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.7/go.mod h1:l9y75W7sH2/5VjYFAyF1RrrPzs460dJtDdUBmUJDujg=
+cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.8 h1:6NILqZblUsUm5/qxE3IgvCTrGZNdtkcX4r2+AnRL+Y0=
+cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.8/go.mod h1:l9y75W7sH2/5VjYFAyF1RrrPzs460dJtDdUBmUJDujg=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=

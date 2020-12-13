@@ -3,6 +3,7 @@ module cisco-app-networking.github.io/networkservicemesh/utils
 go 1.13
 
 require (
+	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.8
 	github.com/caddyserver/caddy v1.0.5
 	github.com/onsi/gomega v1.7.0
 	github.com/pkg/errors v0.8.1
@@ -11,8 +12,3 @@ require (
 )
 
 replace github.com/census-instrumentation/opencensus-proto v0.1.0-0.20181214143942-ba49f56771b8 => github.com/census-instrumentation/opencensus-proto v0.0.3-0.20181214143942-ba49f56771b8
-
-replace (
-	github.com/networkservicemesh/networkservicemesh/controlplane/api => cisco-app-networking.github.io/networkservicemesh/controlplane/api latest
-	github.com/networkservicemesh/networkservicemesh/utils => ./
-)
