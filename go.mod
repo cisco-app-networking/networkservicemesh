@@ -34,20 +34,3 @@ replace (
 	k8s.io/sample-cli-plugin => k8s.io/sample-cli-plugin v0.18.1
 	k8s.io/sample-controller => k8s.io/sample-controller v0.18.1
 )
-
-replace (
-	github.com/networkservicemesh/networkservicemesh => ./
-	github.com/networkservicemesh/networkservicemesh/applications/nsmrs => ./applications/nsmrs
-	github.com/networkservicemesh/networkservicemesh/controlplane => ./controlplane
-	github.com/networkservicemesh/networkservicemesh/controlplane/api => ./controlplane/api
-	github.com/networkservicemesh/networkservicemesh/forwarder => ./forwarder
-	github.com/networkservicemesh/networkservicemesh/forwarder/api => ./forwarder/api
-	github.com/networkservicemesh/networkservicemesh/k8s => ./k8s
-	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis => ./k8s/pkg/apis
-	github.com/networkservicemesh/networkservicemesh/pkg => ./pkg
-	github.com/networkservicemesh/networkservicemesh/scripts/aws => ./scripts/aws
-	github.com/networkservicemesh/networkservicemesh/sdk => ./sdk
-	github.com/networkservicemesh/networkservicemesh/side-cars => ./side-cars
-	github.com/networkservicemesh/networkservicemesh/test => ./test
-	github.com/networkservicemesh/networkservicemesh/utils => ./utils
-)
