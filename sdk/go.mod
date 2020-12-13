@@ -6,10 +6,6 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/golang/protobuf v1.4.2
 	github.com/hashicorp/go-multierror v1.0.0
-	github.com/networkservicemesh/networkservicemesh/controlplane v0.0.0-00010101000000-000000000000
-	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.0.0-00010101000000-000000000000
-	github.com/networkservicemesh/networkservicemesh/pkg v0.0.0-00010101000000-000000000000
-	github.com/networkservicemesh/networkservicemesh/utils v0.0.0-00010101000000-000000000000
 	github.com/onsi/gomega v1.10.3
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.6.0
