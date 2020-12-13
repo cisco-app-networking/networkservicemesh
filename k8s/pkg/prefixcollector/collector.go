@@ -12,7 +12,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm/v1beta2"
 
-	"github.com/networkservicemesh/networkservicemesh/sdk/prefix_pool"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/prefix_pool"
 )
 
 const (

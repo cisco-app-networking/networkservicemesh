@@ -7,13 +7,13 @@ import (
 	"os"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/probes"
-	"github.com/networkservicemesh/networkservicemesh/pkg/probes/health"
-	"github.com/networkservicemesh/networkservicemesh/utils"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/probes"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/probes/health"
+	"cisco-app-networking.github.io/networkservicemesh/utils"
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 var version string

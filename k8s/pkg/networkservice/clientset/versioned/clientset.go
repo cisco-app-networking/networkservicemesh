@@ -25,7 +25,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	networkservicev1alpha1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/typed/networkservice/v1alpha1"
+	networkservicev1alpha1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/typed/networkservice/v1alpha1"
 )
 
 type Interface interface {

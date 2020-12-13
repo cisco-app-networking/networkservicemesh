@@ -5,16 +5,16 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/registryserver/resourcecache"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/registryserver/resourcecache"
 
 	"github.com/sirupsen/logrus"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	v1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
-	nsmClientset "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/informers/externalversions"
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/namespace"
+	v1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
+	nsmClientset "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/informers/externalversions"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/namespace"
 )
 
 type RegistryCache interface {

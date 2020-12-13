@@ -47,14 +47,3 @@ replace (
 	k8s.io/sample-cli-plugin => k8s.io/sample-cli-plugin v0.18.1
 	k8s.io/sample-controller => k8s.io/sample-controller v0.18.1
 )
-
-replace (
-	github.com/networkservicemesh/networkservicemesh/controlplane => cisco-app-networking.github.io/networkservicemesh/controlplane latest
-	github.com/networkservicemesh/networkservicemesh/controlplane/api => cisco-app-networking.github.io/networkservicemesh/controlplane/api latest
-	github.com/networkservicemesh/networkservicemesh/forwarder/api => cisco-app-networking.github.io/networkservicemesh/forwarder/api latest
-	github.com/networkservicemesh/networkservicemesh/k8s => ./
-	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis => cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis latest
-	github.com/networkservicemesh/networkservicemesh/pkg => cisco-app-networking.github.io/networkservicemesh/pkg latest
-	github.com/networkservicemesh/networkservicemesh/sdk => cisco-app-networking.github.io/networkservicemesh/sdk latest
-	github.com/networkservicemesh/networkservicemesh/utils => cisco-app-networking.github.io/networkservicemesh/utils latest
-)

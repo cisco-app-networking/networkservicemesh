@@ -5,19 +5,19 @@ import (
 	"strings"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
 
 	"github.com/pkg/errors"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nsmd"
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"golang.org/x/net/context"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	v1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	v1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )

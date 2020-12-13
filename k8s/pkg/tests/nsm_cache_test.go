@@ -7,8 +7,8 @@ import (
 	. "github.com/onsi/gomega"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	v1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/registryserver/resourcecache"
+	v1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/registryserver/resourcecache"
 )
 
 func TestNsmCacheGetNil(t *testing.T) {

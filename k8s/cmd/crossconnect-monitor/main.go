@@ -8,9 +8,9 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/metrics"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
-	"github.com/networkservicemesh/networkservicemesh/utils"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/metrics"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/utils"
 )
 
 var version string

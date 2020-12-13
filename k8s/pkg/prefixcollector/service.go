@@ -12,8 +12,8 @@ import (
 	v1 "k8s.io/client-go/kubernetes/typed/core/v1"
 	"k8s.io/client-go/rest"
 
-	"github.com/networkservicemesh/networkservicemesh/sdk/common"
-	"github.com/networkservicemesh/networkservicemesh/sdk/prefix_pool"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/common"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/prefix_pool"
 )
 
 const (

@@ -23,7 +23,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
@@ -31,11 +31,11 @@ import (
 	"golang.org/x/net/context"
 	pluginapi "k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/nsmdapi"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
-	"github.com/networkservicemesh/networkservicemesh/sdk/common"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/nsmdapi"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nsmd"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/common"
 )
 
 const (

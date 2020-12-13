@@ -8,10 +8,10 @@ import (
 
 	. "github.com/onsi/gomega"
 
-	v1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/scheme"
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/registryserver"
+	v1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/scheme"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/registryserver"
 
 	"net/http"
 	"sync"

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/namespace"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/namespace"
 
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -15,7 +15,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 type podSpecAndMeta struct {

@@ -19,8 +19,8 @@
 package networkservice
 
 import (
-	internalinterfaces "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/networkservice/v1alpha1"
+	internalinterfaces "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/internalinterfaces"
+	v1alpha1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/networkservice/v1alpha1"
 )
 
 // Interface provides access to each of this group's versions.

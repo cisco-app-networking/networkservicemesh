@@ -27,11 +27,11 @@ import (
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/pkg/errors"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/clusterinfo"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/clusterinfo"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nsmd"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 )
 
 const (
