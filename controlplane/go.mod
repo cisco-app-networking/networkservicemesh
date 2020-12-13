@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/golang/protobuf v1.4.2
+	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.0.0-00010101000000-000000000000
 	github.com/onsi/gomega v1.10.3
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/pkg/errors v0.9.1
@@ -19,7 +20,7 @@ replace (
 	github.com/census-instrumentation/opencensus-proto v0.1.0-0.20181214143942-ba49f56771b8 => github.com/census-instrumentation/opencensus-proto v0.0.3-0.20181214143942-ba49f56771b8
 	github.com/networkservicemesh/networkservicemesh => ../
 	github.com/networkservicemesh/networkservicemesh/controlplane => ./
-	github.com/networkservicemesh/networkservicemesh/controlplane/api => ./api
+	github.com/networkservicemesh/networkservicemesh/controlplane/api => cisco-app-networking.github.io/networkservicemesh/controlplane/api latest
 	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/api/nsm => ./pkg
 	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/common => ./pkg
 	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/local => ./pkg
