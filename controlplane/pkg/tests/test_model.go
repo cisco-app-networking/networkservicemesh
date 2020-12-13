@@ -19,7 +19,7 @@ package tests
 import (
 	"context"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
 )
 
 type testModelWithHookOnApplyClientConnChanges struct {

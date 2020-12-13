@@ -3,6 +3,11 @@ module cisco-app-networking.github.io/networkservicemesh/controlplane
 go 1.13
 
 require (
+	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/forwarder/api v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/pkg v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/sdk v1.0.9
+	cisco-app-networking.github.io/networkservicemesh/utils v1.0.10
 	github.com/golang/protobuf v1.4.2
 	github.com/onsi/gomega v1.10.3
 	github.com/opentracing/opentracing-go v1.1.0
@@ -15,35 +20,4 @@ require (
 	google.golang.org/grpc v1.29.1
 )
 
-replace (
-	github.com/census-instrumentation/opencensus-proto v0.1.0-0.20181214143942-ba49f56771b8 => github.com/census-instrumentation/opencensus-proto v0.0.3-0.20181214143942-ba49f56771b8
-	github.com/networkservicemesh/networkservicemesh => ../
-	github.com/networkservicemesh/networkservicemesh/controlplane => ./
-	github.com/networkservicemesh/networkservicemesh/controlplane/api => cisco-app-networking.github.io/networkservicemesh/controlplane/api latest
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/api/nsm => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/common => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/local => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/metrics => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/monitor/remote => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nseregistry => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsm => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/properties => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/remote => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/remote/proxy_network_service_server => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/selector => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/services => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/sid => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/tests => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/tests/utils => ./pkg
-	github.com/networkservicemesh/networkservicemesh/controlplane/pkg/vni => ./pkg
-	github.com/networkservicemesh/networkservicemesh/forwarder => ../forwarder
-	github.com/networkservicemesh/networkservicemesh/forwarder/api => ../forwarder/api
-	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis => ../k8s/pkg/apis
-	github.com/networkservicemesh/networkservicemesh/pkg => ../pkg
-	github.com/networkservicemesh/networkservicemesh/sdk => ../sdk
-	github.com/networkservicemesh/networkservicemesh/side-cars => ../side-cars
-	github.com/networkservicemesh/networkservicemesh/utils => ../utils
-)
+replace github.com/census-instrumentation/opencensus-proto v0.1.0-0.20181214143942-ba49f56771b8 => github.com/census-instrumentation/opencensus-proto v0.0.3-0.20181214143942-ba49f56771b8

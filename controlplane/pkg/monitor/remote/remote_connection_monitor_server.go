@@ -1,10 +1,10 @@
 package remote
 
 import (
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/services"
-	"github.com/networkservicemesh/networkservicemesh/sdk/monitor"
-	"github.com/networkservicemesh/networkservicemesh/sdk/monitor/connectionmonitor"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/services"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/monitor"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/monitor/connectionmonitor"
 )
 
 // MonitorServer is a monitor.Server for remote/connection GRPC API

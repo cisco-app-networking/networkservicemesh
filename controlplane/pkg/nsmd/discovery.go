@@ -18,8 +18,8 @@ package nsmd
 import (
 	"context"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
 )
 
 type networkServiceDiscoveryServer struct {

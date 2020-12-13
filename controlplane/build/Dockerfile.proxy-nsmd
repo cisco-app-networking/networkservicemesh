@@ -6,7 +6,7 @@ ARG GO_VERSION
 FROM golang:${GO_VERSION}-alpine as build
 
 ENV GOPROXY=${GOPROXY}
-ENV PACKAGEPATH=github.com/networkservicemesh/networkservicemesh/controlplane
+ENV PACKAGEPATH=cisco-app-networking.github.io/networkservicemesh/controlplane
 ENV GO111MODULE=on
 
 RUN mkdir /root/networkservicemesh

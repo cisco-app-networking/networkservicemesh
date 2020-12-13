@@ -5,13 +5,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
 
 	. "github.com/onsi/gomega"
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/sdk/common"
-	"github.com/networkservicemesh/networkservicemesh/sdk/endpoint"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/common"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/endpoint"
 )
 
 func TestNSMDRestart1(t *testing.T) {

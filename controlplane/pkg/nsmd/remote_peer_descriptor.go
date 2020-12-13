@@ -20,9 +20,9 @@ import (
 	"context"
 	"sync"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
 )
 
 //RemotePeerDescriptor represents network service manager remote peer
