@@ -3,6 +3,10 @@ module cisco-app-networking.github.io/networkservicemesh/sdk
 go 1.13
 
 require (
+	cisco-app-networking.github.io/networkservicemesh/controlplane v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/pkg v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/utils v1.0.10
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/golang/protobuf v1.4.2
 	github.com/hashicorp/go-multierror v1.0.0
@@ -18,9 +22,4 @@ require (
 replace (
 	github.com/census-instrumentation/opencensus-proto v0.1.0-0.20181214143942-ba49f56771b8 => github.com/census-instrumentation/opencensus-proto v0.0.3-0.20181214143942-ba49f56771b8
 	github.com/codahale/hdrhistogram => github.com/HdrHistogram/hdrhistogram-go v0.9.0
-	github.com/networkservicemesh/networkservicemesh/controlplane => cisco-app-networking.github.io/networkservicemesh/controlplane latest
-	github.com/networkservicemesh/networkservicemesh/controlplane/api => cisco-app-networking.github.io/networkservicemesh/controlplane/api latest
-	github.com/networkservicemesh/networkservicemesh/pkg => cisco-app-networking.github.io/networkservicemesh/pkg latest
-	github.com/networkservicemesh/networkservicemesh/sdk => ./
-	github.com/networkservicemesh/networkservicemesh/utils => cisco-app-networking.github.io/networkservicemesh/utils latest
 )

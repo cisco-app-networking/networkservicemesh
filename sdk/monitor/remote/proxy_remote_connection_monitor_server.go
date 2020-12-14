@@ -3,16 +3,16 @@ package remote
 import (
 	"context"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 
-	"github.com/networkservicemesh/networkservicemesh/utils/interdomain"
+	"cisco-app-networking.github.io/networkservicemesh/utils/interdomain"
 
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/sdk/monitor"
-	"github.com/networkservicemesh/networkservicemesh/sdk/monitor/connectionmonitor"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/monitor"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/monitor/connectionmonitor"
 )
 
 const (

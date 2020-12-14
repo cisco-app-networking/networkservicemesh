@@ -23,10 +23,10 @@ import (
 
 	"github.com/hashicorp/go-multierror"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/sdk/client"
-	"github.com/networkservicemesh/networkservicemesh/sdk/common"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/client"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/common"
 )
 
 // ClientEndpoint - opens a Client connection to another Network Service

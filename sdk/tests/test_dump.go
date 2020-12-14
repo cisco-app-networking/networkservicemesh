@@ -5,14 +5,14 @@ import (
 
 	vpp_interfaces "go.ligato.io/vpp-agent/v3/proto/ligato/vpp/interfaces"
 
-	"github.com/networkservicemesh/networkservicemesh/sdk/vppagent"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/vppagent"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/ptypes/empty"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/sdk/endpoint"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/endpoint"
 )
 
 // ConnectionDump - opens a Client connection to another Network Service
