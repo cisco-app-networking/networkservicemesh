@@ -1116,7 +1116,6 @@ honnef.co/go/tools v0.0.1-2020.1.4/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9
 k8s.io/api v0.18.1 h1:pnHr0LH69kvL29eHldoepUDKTuiOejNZI2A1gaxve3Q=
 k8s.io/api v0.18.1/go.mod h1:3My4jorQWzSs5a+l7Ge6JBbIxChLnY8HnuT58ZWolss=
 k8s.io/apiextensions-apiserver v0.18.1/go.mod h1:O6BY08Jq7b4AkLNYgbEp4HOqJ0rYkFIMtXLZuBYfGes=
-k8s.io/apimachinery v0.18.1/go.mod h1:9SnR/e11v5IbyPCGbvJViimtJ0SwHG4nfZFjU77ftcA=
 k8s.io/apimachinery v0.18.2-beta.0 h1:V0o4OmjKXgxbZ4v1fiJG2jBzEJirMcAEb1N0DuSQypI=
 k8s.io/apimachinery v0.18.2-beta.0/go.mod h1:9SnR/e11v5IbyPCGbvJViimtJ0SwHG4nfZFjU77ftcA=
 k8s.io/apiserver v0.18.1 h1:VcbQpGYYY0ftCK5svjryhSVVac1my1pMqAA6W3GHbnk=
@@ -1127,7 +1126,6 @@ k8s.io/client-go v0.18.1/go.mod h1:iCikYRiXOj/yRRFE/aWqrpPtDt4P2JVWhtHkmESTcfY=
 k8s.io/cloud-provider v0.18.1/go.mod h1:AD7y8xd55v2W3UHtD9ukhVnRU/G8S4DeeHX2jZw8xr8=
 k8s.io/cluster-bootstrap v0.18.1 h1:ja7HgvODEE6Z8Ps9c7dj9Kc12HGgjsWmMkrDkhF35Dk=
 k8s.io/cluster-bootstrap v0.18.1/go.mod h1:BjicFjTnVRiO2YpeRKQJZRdKRozYO7imxqkOKUcUuYs=
-k8s.io/code-generator v0.18.1/go.mod h1:+UHX5rSbxmR8kzS+FAv7um6dtYrZokQvjHpDSYRVkTc=
 k8s.io/code-generator v0.18.2-beta.0/go.mod h1:+UHX5rSbxmR8kzS+FAv7um6dtYrZokQvjHpDSYRVkTc=
 k8s.io/component-base v0.18.1 h1:gWqHqhLhLoFz1P+MpxWoF3cdDjfMalrGein/UgyjzfM=
 k8s.io/component-base v0.18.1/go.mod h1:r/fjelIVTKZaRczQRx/YzP2CJfhefUsUE4llMc9Pg4g=
