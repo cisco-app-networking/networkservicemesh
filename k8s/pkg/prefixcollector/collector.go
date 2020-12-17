@@ -1,16 +1,16 @@
 package prefixcollector
 
 import (
-	"context"
+//	"context"
 	"os"
 	"strings"
 
-	"github.com/pkg/errors"
+//	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/util/yaml"
+//	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+//	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm/v1beta2"
+	//"k8s.io/api/apps/v1beta2"
 
 	"cisco-app-networking.github.io/networkservicemesh/sdk/prefix_pool"
 )
@@ -48,7 +48,8 @@ func getExcludedPrefixesFromEnv() []string {
 }
 
 func getExcludedPrefixesFromConfigMap(clientset *kubernetes.Clientset) ([]string, error) {
-	kubeadmConfig, err := clientset.CoreV1().
+    return []string{},nil
+/*	kubeadmConfig, err := clientset.CoreV1().
 		ConfigMaps("kube-system").
 		Get(context.TODO(), "kubeadm-config", metav1.GetOptions{})
 	if err != nil {
@@ -77,6 +78,7 @@ func getExcludedPrefixesFromConfigMap(clientset *kubernetes.Clientset) ([]string
 		podSubnet,
 		serviceSubnet,
 	}, nil
+*/
 }
 
 func monitorSubnets(clientset *kubernetes.Clientset, additionalPrefixes ...string) <-chan prefix_pool.PrefixPool {

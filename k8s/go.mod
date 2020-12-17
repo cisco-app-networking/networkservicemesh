@@ -18,9 +18,7 @@ require (
 	k8s.io/api v0.18.1
 	k8s.io/apimachinery v0.18.2-beta.0
 	k8s.io/client-go v0.18.1
-	k8s.io/cluster-bootstrap v0.18.1 // indirect
 	k8s.io/kubelet v0.18.1
-	k8s.io/kubernetes v1.18.1
 )
 
 replace (
