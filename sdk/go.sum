@@ -1,15 +1,21 @@
-cisco-app-networking.github.io/networkservicemesh/controlplane v1.0.10 h1:8UeoDrBHx2Tss6oIZvjUUtG0NqiGCOacL7ZdGk7z9pg=
-cisco-app-networking.github.io/networkservicemesh/controlplane v1.0.10/go.mod h1:1Btb7sfaOuq1uIgr2TZmKyrWiY3QDfXG3F7aYnYELUI=
+cisco-app-networking.github.io/networkservicemesh/controlplane v1.0.13 h1:3K3rMrlGbMZbOlGDoFNobso6tfYV4Y9YBvIk7263v+w=
+cisco-app-networking.github.io/networkservicemesh/controlplane v1.0.13/go.mod h1:1Btb7sfaOuq1uIgr2TZmKyrWiY3QDfXG3F7aYnYELUI=
 cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.8 h1:6NILqZblUsUm5/qxE3IgvCTrGZNdtkcX4r2+AnRL+Y0=
 cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.8/go.mod h1:l9y75W7sH2/5VjYFAyF1RrrPzs460dJtDdUBmUJDujg=
 cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10 h1:YD7QxYOGmLSnuKyGa7/9OZ99mafAHpCgskgwOL1Hhqo=
 cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10/go.mod h1:hDsoX1EvZWQoYD/fkbrgfhGCPvMU1AhMcWzhvOXVrUY=
+cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.13 h1:yDMn5E6H3S1wxtCcV58u/4D2GJmy8OYzxoz/teUZIlo=
+cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.13/go.mod h1:hDsoX1EvZWQoYD/fkbrgfhGCPvMU1AhMcWzhvOXVrUY=
 cisco-app-networking.github.io/networkservicemesh/forwarder/api v1.0.10/go.mod h1:BT8eZ0QK4w2f5uzOYEWUIbNBbZPR8EIXXRd/b5pMZb4=
 cisco-app-networking.github.io/networkservicemesh/pkg v1.0.10 h1:VyFZJaSe0dLeLse/4Gs3dFxEOjeC9OUukziMyblqvQs=
 cisco-app-networking.github.io/networkservicemesh/pkg v1.0.10/go.mod h1:04+MevhVYHFP4zE7wF9/CX+pWAlPJeTwyvL2pvjCzR0=
+cisco-app-networking.github.io/networkservicemesh/pkg v1.0.13 h1:s4fZHAbu04k8w+OEP1R7N7uV2TLM9utDd3qKgGoAi0A=
+cisco-app-networking.github.io/networkservicemesh/pkg v1.0.13/go.mod h1:04+MevhVYHFP4zE7wF9/CX+pWAlPJeTwyvL2pvjCzR0=
 cisco-app-networking.github.io/networkservicemesh/sdk v1.0.9/go.mod h1:Ccv1laUUl7JL4C83VdcukFNK0fz+UXq6OA+A8L/Wrx4=
 cisco-app-networking.github.io/networkservicemesh/utils v1.0.10 h1:DHtBFHqgYPsZ+6SHJb/d0fL2GtOxOJnoJaUYlpRmhPQ=
 cisco-app-networking.github.io/networkservicemesh/utils v1.0.10/go.mod h1:e0NtiC3aYD1irk/R7/GgUFmMilM/iBKS2tKbSyLeDpU=
+cisco-app-networking.github.io/networkservicemesh/utils v1.0.13 h1:ZM+JtRz0cfVCZk1CoTRrzka9pcBqEEimmsMwNovckcM=
+cisco-app-networking.github.io/networkservicemesh/utils v1.0.13/go.mod h1:e0NtiC3aYD1irk/R7/GgUFmMilM/iBKS2tKbSyLeDpU=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=
@@ -160,6 +166,8 @@ github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7a
 github.com/gogo/protobuf v1.2.0/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.1 h1:/s5zKNz0uPFCZ5hddgPdo2TK2TVrUNMn0OOX8/aZMTE=
 github.com/gogo/protobuf v1.2.1/go.mod h1:hp+jE20tsWTFYpLwKvXlhS1hjn+gTNwPg2I6zVXpSg4=
+github.com/gogo/protobuf v1.3.1 h1:DqDEcV5aeaTmdFBePNpYsp3FlcVH/2ISVVM9Qf8PSls=
+github.com/gogo/protobuf v1.3.1/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/goji/httpauth v0.0.0-20160601135302-2da839ab0f4d/go.mod h1:nnjvkQ9ptGaCkuDUx6wNykzzlUixGxvkme+H/lnzb+A=
 github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0/go.mod h1:E/TSTwGwJL78qG/PmXZO1EjYhfJinVAhrmmHX6Z8B9k=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
@@ -262,6 +270,7 @@ github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1
 github.com/jtolds/gls v4.20.0+incompatible/go.mod h1:QJZ7F/aHp+rZTRtaJ1ow/lLfFfVYBRgL+9YlvaHOwJU=
 github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7VTCxuUUipMqKk8s4w=
 github.com/kisielk/errcheck v1.1.0/go.mod h1:EZBBE59ingxPouuu3KfxchcWSUPOHkagtvWXihfKN4Q=
+github.com/kisielk/errcheck v1.2.0/go.mod h1:/BMXB+zMLi60iA8Vv6Ksmxu/1UDYcXs4uQLJ+jE2L00=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/klauspost/cpuid v1.2.0/go.mod h1:Pj4uuM528wm8OyEC2QMXAi2YiTZ96dNQPGgoMS4s3ek=
 github.com/kolo/xmlrpc v0.0.0-20190717152603-07c4ee3fd181/go.mod h1:o03bZfuBwAXHetKXuInt4S7omeXUu62/A845kiycsSQ=
@@ -423,6 +432,8 @@ github.com/soheilhy/cmux v0.1.4/go.mod h1:IM3LyeVVIOuxMH7sFAkER9+bJ4dT7Ms6E4xg4k
 github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
 github.com/spf13/afero v1.1.2 h1:m8/z1t7/fwjysjQRYbP0RD+bUIF/8tJwPdEZsI83ACI=
 github.com/spf13/afero v1.1.2/go.mod h1:j4pytiNVoe2o6bmDsKpLACNPDBIoEAkihy7loJ1B0CQ=
+github.com/spf13/afero v1.2.2 h1:5jhuqJyZCZf2JRofRvN/nIFgIWNzPa3/Vz8mYylgbWc=
+github.com/spf13/afero v1.2.2/go.mod h1:9ZxEEn6pIJ8Rxe320qSDBk6AsU0r9pR7Q4OcevTdifk=
 github.com/spf13/cast v1.3.0 h1:oget//CVOEoFewqQxwr0Ej5yjygnqGkvggSE/gB35Q8=
 github.com/spf13/cast v1.3.0/go.mod h1:Qx5cxh0v+4UWYiBimWS+eyWzqEqokIECu5etghLkUJE=
 github.com/spf13/cobra v0.0.7/go.mod h1:/6GTrnGXV9HjY+aR4k0oJ5tcvakLuG6EuKReYlHNrgE=
@@ -430,6 +441,8 @@ github.com/spf13/jwalterweatherman v1.0.0 h1:XHEdyB+EcvlqZamSM4ZOMGlc93t6AcsBEu9
 github.com/spf13/jwalterweatherman v1.0.0/go.mod h1:cQK4TGJAtQXfYWX+Ddv3mKDzgVb68N+wFjFa4jdeBTo=
 github.com/spf13/pflag v1.0.3 h1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg=
 github.com/spf13/pflag v1.0.3/go.mod h1:DYY7MBk1bdzusC3SYhjObp+wFpr4gzcvqqNjLnInEg4=
+github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
+github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
 github.com/spf13/viper v1.4.0/go.mod h1:PTJ7Z/lr49W6bUbkmS1V3by4uWynFiR9p7+dSq/yZzE=
 github.com/spf13/viper v1.5.0 h1:GpsTwfsQ27oS/Aha/6d1oD7tpKIqWnOA6tgOX9HHkt4=
 github.com/spf13/viper v1.5.0/go.mod h1:AkYRkVJF8TkSG/xet6PzXX+l39KhhXa2pdqVSxnTcn4=
@@ -608,6 +621,7 @@ golang.org/x/time v0.0.0-20190921001708-c4c64cad1fd0/go.mod h1:tRJNPiyCQ0inRvYxb
 golang.org/x/tools v0.0.0-20180221164845-07fd8470d635/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20180828015842-6cd1fcedba52/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
+golang.org/x/tools v0.0.0-20181030221726-6c7e314b6563/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20190114222345-bf090417da8b/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20190226205152-f727befe758c/go.mod h1:9Yl7xja0Znq3iFh3HoIrodX9oNMXvdceNzlUR8zjMvY=
 golang.org/x/tools v0.0.0-20190311212946-11955173bddd/go.mod h1:LCzVGOaR6xXOjkQ3onu1FJEFr0SW1gC7cKk1uF8kGRs=

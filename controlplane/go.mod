@@ -3,11 +3,11 @@ module cisco-app-networking.github.io/networkservicemesh/controlplane
 go 1.13
 
 require (
-	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/forwarder/api v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/pkg v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/sdk v1.0.9
-	cisco-app-networking.github.io/networkservicemesh/utils v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/forwarder/api v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/pkg v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/sdk v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/utils v1.0.13-vanity
 	github.com/golang/protobuf v1.4.2
 	github.com/onsi/gomega v1.10.3
 	github.com/opentracing/opentracing-go v1.1.0

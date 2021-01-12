@@ -3,12 +3,12 @@ module cisco-app-networking.github.io/networkservicemesh/k8s
 go 1.15
 
 require (
-	cisco-app-networking.github.io/networkservicemesh/controlplane v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/pkg v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/sdk v1.0.10
-	cisco-app-networking.github.io/networkservicemesh/utils v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/controlplane v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/pkg v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/sdk v1.0.13-vanity
+	cisco-app-networking.github.io/networkservicemesh/utils v1.0.13-vanity
 	github.com/golang/protobuf v1.4.2
 	github.com/onsi/gomega v1.10.3
 	github.com/pkg/errors v0.9.1

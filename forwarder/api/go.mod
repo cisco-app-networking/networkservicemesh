@@ -3,7 +3,7 @@ module cisco-app-networking.github.io/networkservicemesh/forwarder/api
 go 1.13
 
 require (
-	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.10
+	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.13-vanity
 	github.com/golang/protobuf v1.3.2
 	google.golang.org/grpc v1.27.0
 )

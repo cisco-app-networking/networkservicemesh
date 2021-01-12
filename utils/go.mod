@@ -3,7 +3,7 @@ module cisco-app-networking.github.io/networkservicemesh/utils
 go 1.13
 
 require (
-	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.8
+	cisco-app-networking.github.io/networkservicemesh/controlplane/api v1.0.13-vanity
 	github.com/caddyserver/caddy v1.0.5
 	github.com/onsi/gomega v1.7.0
 	github.com/pkg/errors v0.8.1
