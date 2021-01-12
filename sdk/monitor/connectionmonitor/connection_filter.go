@@ -16,7 +16,7 @@
 
 package connectionmonitor
 
-import "github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
+import "cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
 
 type monitorConnectionFilter struct {
 	connection.MonitorConnection_MonitorConnectionsServer

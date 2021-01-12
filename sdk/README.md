@@ -63,7 +63,7 @@ The NSM Client's main task is to request a connection to a particular Network Se
 The following code snippet illustrates its usage.
 
 ```go
-import "github.com/networkservicemesh/networkservicemesh/sdk/client"
+import "cisco-app-networking.github.io/networkservicemesh/sdk/client"
 
 ...
 
@@ -104,7 +104,7 @@ Invoking the client list API with this environment set will initiate a connectio
 A simplified example code which demonstrates the ClientList usage is shown below.
 
 ```go
-import "github.com/networkservicemesh/networkservicemesh/sdk/client"
+import "cisco-app-networking.github.io/networkservicemesh/sdk/client"
 
 ...
 
@@ -125,7 +125,7 @@ if err := client.Connect(context.Background(), "nsm", "kernel", "Primary interfa
 The following code implements a simple *endpoint* that upon request will create an empty connection object and assign it a pair of IP addresses.
 
 ```go
-import "github.com/networkservicemesh/networkservicemesh/sdk/endpoint"
+import "cisco-app-networking.github.io/networkservicemesh/sdk/endpoint"
 
 ...
 

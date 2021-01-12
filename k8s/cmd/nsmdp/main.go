@@ -18,15 +18,15 @@ import (
 	"context"
 	"os"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/jaeger"
-	"github.com/networkservicemesh/networkservicemesh/utils"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/jaeger"
+	"cisco-app-networking.github.io/networkservicemesh/utils"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nsmd"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 var version string

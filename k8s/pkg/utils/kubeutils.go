@@ -10,7 +10,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
 )
 
 // NewClientSet creates a new Clientset for the default kubernetes config.

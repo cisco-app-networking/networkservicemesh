@@ -19,7 +19,7 @@ import (
 	"reflect"
 	"testing"
 
-	. "github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	. "cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 func TestParseKVStringToMap(t *testing.T) {

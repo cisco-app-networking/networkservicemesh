@@ -19,13 +19,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 
 	"github.com/golang/protobuf/ptypes/empty"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/utils/typeutils"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/utils/typeutils"
 )
 
 const nextKey ContextKeyType = "Next"

@@ -28,9 +28,9 @@ import (
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 
-	versioned "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
-	internalinterfaces "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/internalinterfaces"
-	networkservice "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/networkservice"
+	versioned "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
+	internalinterfaces "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/internalinterfaces"
+	networkservice "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/informers/externalversions/networkservice"
 )
 
 // SharedInformerOption defines the functional option type for SharedInformerFactory.

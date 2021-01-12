@@ -5,8 +5,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/common"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/common"
 )
 
 // Mechanism - a vxlan mechanism utility wrapper

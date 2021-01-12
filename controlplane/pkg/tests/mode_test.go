@@ -6,8 +6,8 @@ import (
 
 	. "github.com/onsi/gomega"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
 )
 
 func newModel() model.Model {

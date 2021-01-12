@@ -1,6 +1,6 @@
 package env
 
-import "github.com/networkservicemesh/networkservicemesh/utils"
+import "cisco-app-networking.github.io/networkservicemesh/utils"
 
 const (
 	//DNSSearchDomainsPatchEnv represents a list of strings. Uses for customization of DNS patch.

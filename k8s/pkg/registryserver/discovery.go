@@ -6,15 +6,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 
-	utils "github.com/networkservicemesh/networkservicemesh/utils/interdomain"
+	utils "cisco-app-networking.github.io/networkservicemesh/utils/interdomain"
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nsmd"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
 )
 
 // Default values and environment variables of proxy connection

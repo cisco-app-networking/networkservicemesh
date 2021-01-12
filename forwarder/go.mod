@@ -1,9 +1,9 @@
-module github.com/cisco-app-networking/networkservicemesh/forwarder
+module cisco-app-networking.github.io/networkservicemesh/forwarder
 
 go 1.13
 
 require (
-	github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d
+	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.4.2
 	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.3.0
 	github.com/networkservicemesh/networkservicemesh/forwarder v0.0.0-00010101000000-000000000000

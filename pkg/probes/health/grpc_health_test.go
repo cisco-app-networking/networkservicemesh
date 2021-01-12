@@ -11,7 +11,7 @@ import (
 
 	"github.com/onsi/gomega"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 func TestGrpcHealth(t *testing.T) {

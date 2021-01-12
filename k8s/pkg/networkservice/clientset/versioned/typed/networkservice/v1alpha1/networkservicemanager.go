@@ -27,8 +27,8 @@ import (
 	watch "k8s.io/apimachinery/pkg/watch"
 	rest "k8s.io/client-go/rest"
 
-	v1alpha1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
-	scheme "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/scheme"
+	v1alpha1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/apis/networkservice/v1alpha1"
+	scheme "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/scheme"
 )
 
 // NetworkServiceManagersGetter has a method to return a NetworkServiceManagerInterface.

@@ -19,8 +19,8 @@ package metrics
 import (
 	"github.com/pkg/errors"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/crossconnect"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/crossconnect"
 )
 
 // GetMetricsIdentifiers returns source and destination

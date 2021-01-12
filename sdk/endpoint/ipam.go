@@ -22,11 +22,11 @@ import (
 
 	"github.com/golang/protobuf/ptypes/empty"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connectioncontext"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/sdk/common"
-	"github.com/networkservicemesh/networkservicemesh/sdk/prefix_pool"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connectioncontext"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/common"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/prefix_pool"
 )
 
 // IpamEndpoint - provides Ipam functionality

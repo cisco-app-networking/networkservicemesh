@@ -7,10 +7,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/remote"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/remote"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/api/nsm"
-	remoteMonitor "github.com/networkservicemesh/networkservicemesh/controlplane/pkg/monitor/remote"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/api/nsm"
+	remoteMonitor "cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/monitor/remote"
 
 	"github.com/pkg/errors"
 
@@ -19,24 +19,24 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/probes"
-	"github.com/networkservicemesh/networkservicemesh/pkg/probes/health"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/probes"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/probes/health"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/crossconnect"
-	unified "github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/nsmdapi"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nseregistry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/services"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
-	"github.com/networkservicemesh/networkservicemesh/sdk/monitor"
-	"github.com/networkservicemesh/networkservicemesh/sdk/monitor/connectionmonitor"
-	monitor_crossconnect "github.com/networkservicemesh/networkservicemesh/sdk/monitor/crossconnect"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/crossconnect"
+	unified "cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/nsmdapi"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nseregistry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/services"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/monitor"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/monitor/connectionmonitor"
+	monitor_crossconnect "cisco-app-networking.github.io/networkservicemesh/sdk/monitor/crossconnect"
 )
 
 const (

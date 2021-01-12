@@ -19,12 +19,12 @@ import (
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 
-	mechanismCommon "github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/common"
+	mechanismCommon "cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/common"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/common"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/common"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
 )
 
 type workspaceProviderService struct {

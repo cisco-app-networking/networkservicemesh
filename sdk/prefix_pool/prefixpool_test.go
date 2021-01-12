@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connectioncontext"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connectioncontext"
 )
 
 func TestPrefixPoolSubnet1(t *testing.T) {

@@ -14,17 +14,17 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/spanhelper"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/spanhelper"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/nsmdapi"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/sid"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/vni"
-	forwarderapi "github.com/networkservicemesh/networkservicemesh/forwarder/api/forwarder"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/nsmdapi"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/sid"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/vni"
+	forwarderapi "cisco-app-networking.github.io/networkservicemesh/forwarder/api/forwarder"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 const (

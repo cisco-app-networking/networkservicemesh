@@ -16,7 +16,7 @@
 
 package common
 
-import "github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
+import "cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
 
 // These functions are intentionally not put in api path_helper because they are particular to adapting the existing
 // code to using Path and so intentionally overly simplified.

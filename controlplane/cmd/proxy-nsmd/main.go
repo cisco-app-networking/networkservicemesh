@@ -7,23 +7,23 @@ import (
 	"strings"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/utils"
+	"cisco-app-networking.github.io/networkservicemesh/utils"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/probes/health"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools/jaeger"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/probes/health"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools/jaeger"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/probes"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/probes"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
-	"github.com/networkservicemesh/networkservicemesh/sdk/monitor/remote"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nsmd"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
+	"cisco-app-networking.github.io/networkservicemesh/sdk/monitor/remote"
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	unified "github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	proxynetworkserviceserver "github.com/networkservicemesh/networkservicemesh/controlplane/pkg/remote/proxy_network_service_server"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	unified "cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	proxynetworkserviceserver "cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/remote/proxy_network_service_server"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 var version string

@@ -6,12 +6,12 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/clusterinfo"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	nsmClientset "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
-	"github.com/networkservicemesh/networkservicemesh/k8s/pkg/registryserver"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/clusterinfo"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	nsmClientset "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned"
+	"cisco-app-networking.github.io/networkservicemesh/k8s/pkg/registryserver"
 )
 
 // New starts proxy Network Service Discovery Server and Cluster Info Server

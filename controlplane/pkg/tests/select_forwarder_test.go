@@ -4,18 +4,18 @@ import (
 	"context"
 	"testing"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/kernel"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/memif"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/vxlan"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/kernel"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/memif"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/vxlan"
 
 	. "github.com/onsi/gomega"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/common"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/common"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connectioncontext"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connectioncontext"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
 )
 
 func createTestForwarder(name string, localMechanisms, remoteMechanisms []*connection.Mechanism) *model.Forwarder {

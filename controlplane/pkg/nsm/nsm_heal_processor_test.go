@@ -5,12 +5,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/properties"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/properties"
 
 	"github.com/golang/protobuf/ptypes/empty"
 
-	unified "github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/common"
+	unified "cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/common"
 
 	"github.com/golang/protobuf/proto"
 	. "github.com/onsi/gomega"
@@ -18,15 +18,15 @@ import (
 	net_context "golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/crossconnect"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/networkservice"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/registry"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/api/nsm"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/model"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/nsmd"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/pkg/serviceregistry"
-	test_utils "github.com/networkservicemesh/networkservicemesh/controlplane/pkg/tests/utils"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/crossconnect"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/networkservice"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/registry"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/api/nsm"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/model"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/nsmd"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/serviceregistry"
+	test_utils "cisco-app-networking.github.io/networkservicemesh/controlplane/pkg/tests/utils"
 )
 
 const (

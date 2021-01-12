@@ -22,14 +22,14 @@ import (
 	"path"
 	"strings"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/common"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/common"
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/kernel"
-	"github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/mechanisms/memif"
-	"github.com/networkservicemesh/networkservicemesh/pkg/tools"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/kernel"
+	"cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/mechanisms/memif"
+	"cisco-app-networking.github.io/networkservicemesh/pkg/tools"
 )
 
 func getEnv(key, description string, mandatory bool) string {

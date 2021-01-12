@@ -22,7 +22,7 @@ import (
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 
-	v1alpha1 "github.com/networkservicemesh/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/typed/networkservice/v1alpha1"
+	v1alpha1 "cisco-app-networking.github.io/networkservicemesh/k8s/pkg/networkservice/clientset/versioned/typed/networkservice/v1alpha1"
 )
 
 type FakeNetworkserviceV1alpha1 struct {

@@ -1,4 +1,4 @@
-module github.com/cisco-app-networking/networkservicemesh/side-cars
+module cisco-app-networking.github.io/networkservicemesh/side-cars
 
 go 1.13
 

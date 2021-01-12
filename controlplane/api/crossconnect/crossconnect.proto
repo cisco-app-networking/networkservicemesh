@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package crossconnect;
 
-import "github.com/networkservicemesh/networkservicemesh/controlplane/api/connection/connection.proto";
+import "cisco-app-networking.github.io/networkservicemesh/controlplane/api/connection/connection.proto";
 import "ptypes/empty/empty.proto";
 
 enum CrossConnectEventType {
