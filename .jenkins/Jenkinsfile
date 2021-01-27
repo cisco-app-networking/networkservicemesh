@@ -48,4 +48,7 @@ docker.image('golang:1.15-buster').inside('-u root --net=host -v /var/run/docker
     stage ('Run tests') {
         sh "cloudtest"
     }
+    stage ('Cleanup kind clusters') {
+        sh "docker ps -a"
+    }
 }
