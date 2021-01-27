@@ -1,5 +1,5 @@
 //The Jenkinsfile runs entire build in a golang container and mounts the /var/run/docker.sock file to allow access to the host docker within the container
-docker.image('golang:1.15-buster').inside('-u root -v /var/run/docker.sock:/var/run/docker.sock') {
+docker.image('golang:1.15-buster').inside('-u root --net=host -v /var/run/docker.sock:/var/run/docker.sock') {
     environment{
         CGO_ENABLED = 0
         GO111MODULE = on
