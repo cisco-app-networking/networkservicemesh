@@ -9,8 +9,6 @@ executions:
     root: ./test/integration
     timeout: 600
     cluster-count: 1
-    cluster-selector:
-      - packet
     cluster-env:
       - KUBECONFIG
     on-fail: |

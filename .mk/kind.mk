@@ -16,6 +16,10 @@
 KIND_CLUSTER_NAME?="nsm"
 KIND_IMAGE_PATH=$(IMAGE_DIR)
 
+ifeq ($(CONFIG_LOCATION),)
+	CONFIG_LOCATION := "./.results/config"
+endif
+
 .PHONY: kind-config
 kind-config:
 	@which kind >/dev/null 2>&1 || \
@@ -35,7 +39,9 @@ kind-start: kind-config
 
 .PHONY: kind-export-kubeconfig
 kind-export-kubeconfig:
-	@kind get kubeconfig --name $(KIND_CLUSTER_NAME) > $(KIND_CLUSTER_NAME)-kubeconfig
+	@touch $(CONFIG_LOCATION); \
+	kind get kubeconfig --name $(KIND_CLUSTER_NAME) > $(CONFIG_LOCATION); \
+	echo "$(CONFIG_LOCATION)"
 
 .PHONY: kind-stop
 kind-stop:

@@ -18,8 +18,12 @@ else
 selfSignedCA = false
 endif
 
+.PHONY: tiller-install
+tiller-install:
+	helm init --wait && ./scripts/helm-patch-tiller.sh
+
 .PHONY: spire-install
-spire-install:
+spire-install: tiller-install
 	$(info Self Signed CA = $(selfSignedCA))
 	@if ! helm install --name=spire \
 	--wait --timeout 600 \

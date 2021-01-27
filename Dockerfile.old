@@ -1,0 +1,61 @@
+FROM golang:1.15-buster
+
+# Install Docker Client
+RUN apt-get update
+RUN apt-get install -y \
+   apt-transport-https \
+   ca-certificates \
+   curl \
+   gnupg-agent  \
+   software-properties-common \
+   gettext-base
+
+RUN curl -fsSL https://get.docker.com | sh
+
+#RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+#
+#RUN add-apt-repository \
+#       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+#       $(lsb_release -cs) \
+#       stable"
+#
+#RUN apt-get update
+#
+#RUN apt-get install -y docker-ce-cli
+
+# from .circlci install-yq.sh
+RUN wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/2.1.2/yq_linux_amd64
+RUN chmod 555 /usr/bin/yq
+
+# skipping stuff from .circleci/set-nameserver.sh
+
+# from .scripts/install-kubectl.sh
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/"$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"/bin/linux/amd64/kubectl
+RUN chmod +x kubectl && mv kubectl /usr/local/bin/
+
+## from .scripts/gke/
+#RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-buster main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+#RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+#RUN apt-get update -y && apt-get install google-cloud-sdk -y
+#
+
+RUN curl -LO https://git.io/get_helm.sh
+RUN chmod 700 get_helm.sh
+RUN ./get_helm.sh
+
+COPY go.mod /opt/nsm/
+WORKDIR /opt/nsm
+
+RUN go mod download
+RUN go get github.com/networkservicemesh/cloudtest@v0.2.0
+RUN GO111MODULE="on" go get -u sigs.k8s.io/kind@v0.8.1
+
+COPY . /opt/nsm
+COPY .cloudtest.yaml /opt/nsm/.cloudtest.yaml
+COPY .cloudtest/ /opt/nsm/.cloudtest
+
+#RUN CGO_ENABLED=0 GOOS=linux go build -o ./cloudtest ./test/cloudtest/cmd/cloudtest
+CMD cloudtest
+
+
+
