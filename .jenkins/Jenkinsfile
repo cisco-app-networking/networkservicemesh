@@ -36,6 +36,9 @@ docker.image('golang:1.15-buster').inside('-u root -v /var/run/docker.sock:/var/
         sh "chmod 700 get_helm.sh"
         sh "./get_helm.sh"
     }
+    stage ('Install kind') {
+        sh "go get -u sigs.k8s.io/kind@v0.8.1"
+    }
     stage ('Checkout SCM') {
         checkout scm
     }
