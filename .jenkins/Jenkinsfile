@@ -24,7 +24,7 @@ docker.image('golang:1.15-buster').inside('-u root -v /var/run/docker.sock:/var/
         sh "chmod 555 /usr/bin/yq"
     }
     stage ('Install kubectl') {
-        sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/\"$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)\"/bin/linux/amd64/kubectl"
+        sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/\"\$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)\"/bin/linux/amd64/kubectl"
         sh "chmod +x kubectl && mv kubectl /usr/local/bin/"
     }
     stage ('Checkout SCM') {
