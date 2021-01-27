@@ -45,4 +45,7 @@ docker.image('golang:1.15-buster').inside('-u root -v /var/run/docker.sock:/var/
     stage ('Checkout SCM') {
         checkout scm
     }
+    stage ('Run tests') {
+        sh "cloudtest"
+    }
 }
