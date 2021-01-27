@@ -19,6 +19,10 @@ docker.image('golang:1.15-buster').inside('-u root -v /var/run/docker.sock:/var/
         '''
         sh "apt-get update && apt-get install -y docker-ce-cli"
     }
+    stage ('Install yq') {
+        sh "wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/2.1.2/yq_linux_amd64"
+        sh "chmod 555 /usr/bin/yq"
+    }
     stage ('Checkout SCM') {
         checkout scm
     }
