@@ -27,6 +27,11 @@ docker.image('golang:1.15-buster').inside('-u root -v /var/run/docker.sock:/var/
         sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/\"\$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)\"/bin/linux/amd64/kubectl"
         sh "chmod +x kubectl && mv kubectl /usr/local/bin/"
     }
+    stage ('Install Helm') {
+        sh "curl -LO https://git.io/get_helm.sh"
+        sh "chmod 700 get_helm.sh"
+        sh "./get_helm.sh"
+    }
     stage ('Checkout SCM') {
         checkout scm
     }
