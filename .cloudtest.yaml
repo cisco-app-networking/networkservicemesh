@@ -5,7 +5,7 @@ timeout: 7200  # 2 hour total total timeout
 shuffle-enabled: false
 statistics:
   enabled: true
-  interval: 10  # 60 seconds for statistics
+  interval: 30  # 30 seconds for statistics
 import:
   - .cloudtest/kind.yaml
   - .cloudtest/executions/.*
