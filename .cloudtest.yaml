@@ -1,8 +1,7 @@
 ---
 version: 1.0
 root: "./.tests/cloud_test/"
-#timeout: 7200  # 2 hour total total timeout
-timeout: 1800  # 30 min total timeout
+timeout: 7200  # 2 hour total total timeout
 shuffle-enabled: false
 statistics:
   enabled: true
