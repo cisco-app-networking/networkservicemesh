@@ -38,13 +38,16 @@ node('wcm') {
             sh "./get_helm.sh"
         }
         stage ('Install kind') {
-            sh "go get -u sigs.k8s.io/kind@v0.8.1"
-        }
-        stage ('Install cloudtest v0.2.0') {
-            sh "go get github.com/networkservicemesh/cloudtest@v0.2.0"
+            sh "curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-linux-amd64"
+            sh "chmod +x ./kind"
+            sh "mv ./kind /usr/bin/kind"
+//             sh "GO111MODULE=\"on\" go get -u sigs.k8s.io/kind@v0.8.1"
         }
         stage ('Checkout SCM') {
             checkout scm
+        }
+        stage ('Install cloudtest v0.2.0') {
+            sh "GO111MODULE=\"on\" go get github.com/networkservicemesh/cloudtest@v0.2.0"
         }
         stage ('Run tests') {
             sh "cloudtest"
