@@ -16,30 +16,30 @@ providers:
     timeout: 300    # 5 minutes to start cluster
     stop-delay: 10
     env:
-      - UNIQUE_TEST_NAME=cloudtest-kind-$(rand10)
-      - KIND_CLUSTER_NAME_1=${UNIQUE_TEST_NAME}-1
-      - KIND_CLUSTER_NAME_2=${UNIQUE_TEST_NAME}-2
-      - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
-      - KUBECONFIG_CLUSTER_1=${CONFIG_LOCATION}-${KIND_CLUSTER_NAME_1}
-      - KUBECONFIG_CLUSTER_2=${CONFIG_LOCATION}-${KIND_CLUSTER_NAME_2}
+#      - UNIQUE_TEST_NAME=cloudtest-kind-$(rand10)
+#      - KIND_CLUSTER_NAME_1=${UNIQUE_TEST_NAME}-1
+#      - KIND_CLUSTER_NAME_2=${UNIQUE_TEST_NAME}-2
+#      - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
+      - KUBECONFIG_CLUSTER_1=./.results/cluster1-config
+      - KUBECONFIG_CLUSTER_2=./.results/cluster2-config
       - INSECURE=true
     scripts:
       start: |
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make kind-start
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make kind-start
+        KIND_CLUSTER_NAME=cluster1 make kind-start
+        KIND_CLUSTER_NAME=cluster2 make kind-start
       config: |
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} CONFIG_LOCATION=${KUBECONFIG_CLUSTER_1} make kind-export-kubeconfig
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} CONFIG_LOCATION=${KUBECONFIG_CLUSTER_2} make kind-export-kubeconfig
+        KIND_CLUSTER_NAME=cluster1 CONFIG_LOCATION=./.results/cluster1-config make kind-export-kubeconfig
+        KIND_CLUSTER_NAME=cluster2 CONFIG_LOCATION=./.results/cluster2-config make kind-export-kubeconfig
       stop: |
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make kind-stop
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make kind-stop
+        KIND_CLUSTER_NAME=cluster1 make kind-stop
+        KIND_CLUSTER_NAME=cluster2 make kind-stop
       prepare: |
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make k8s-load-images
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make k8s-load-images
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make spire-install
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make spire-install
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make k8s-config
-        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make k8s-config
+        KIND_CLUSTER_NAME=cluster1 make k8s-load-images
+        KIND_CLUSTER_NAME=cluster2 make k8s-load-images
+        KIND_CLUSTER_NAME=cluster1 make spire-install
+        KIND_CLUSTER_NAME=cluster2 make spire-install
+        KIND_CLUSTER_NAME=cluster1 make k8s-config
+        KIND_CLUSTER_NAME=cluster2 make k8s-config
 executions:
   - name: "Interdomain tests"
     env:
