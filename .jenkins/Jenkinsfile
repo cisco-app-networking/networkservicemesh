@@ -52,5 +52,8 @@ node('wcm') {
         stage ('Run single cluster tests') {
             sh "cloudtest --config .cloudtest-single-cluster.yaml"
         }
+        stage ('Run interdomain tests') {
+            sh "cloudtest --config .cloudtest-interdomain.yaml"
+        }
     }
 }

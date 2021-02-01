@@ -21,6 +21,7 @@
 !utils
 !.cloudtest-bench.yaml
 !.cloudtest-single-cluster.yaml
+!.cloudtest-interdomain.yaml
 !go.mod
 !go.sum
 !Makefile

@@ -6,14 +6,6 @@ shuffle-enabled: false
 statistics:
   enabled: true
   interval: 30  # 30 seconds for statistics
-#import:
-#  - .cloudtest/kind.yaml
-#  - .cloudtest/executions/.*
-#    - .cloudtest/packet.yaml
-#    - .cloudtest/gke.yaml
-#    - .cloudtest/vagrant.yaml
-#    - .cloudtest/aws.yaml
-#    - .cloudtest/azure.yaml
 providers:
   - name: "kind"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
@@ -25,7 +17,7 @@ providers:
     stop-delay: 10
     env:
       - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10)   # Generate a uniq cluster name
-      - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
+      - CONFIG_LOCATION=$(tempdir)/config            # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
     scripts:
       start: make kind-start
       config: make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
@@ -48,18 +40,5 @@ executions:
       - KUBECONFIG
     on-fail: |
       make k8s-reset
-
-#retest:  # Allow to do test re-run if some kind of failures are detected, line CNI network plugin errors.
-#  count: 2  # Allow 2 times to do restart
-#  warmup-time: 15  # Put 15 seconds warmup for cluster instance to be used again.
-#  allowed-retests: 2  # If cluster instance have few attempts with retest requests one after another, we need to restart cluster.
-#  pattern:
-#    - "NetworkPlugin cni failed to set up pod"    # Error in AWS dur to leak of IPs or not ability to assign them.
-#    - "etcdserver: request timed out"  # Error in any could, reason unknown.
-#    - "unable to establish connection to VPP (VPP API socket file /run/vpp/api.sock does not exist)"  # a VPP is not started, it will be re-started in general, but will cause test fail.
-#    # Sometimes (rarely) docker registry is unavailable for a moment
-#    - "Error response from daemon: Get https://.*docker.io/.*: dial tcp: lookup registry"
-#    - "Error response from daemon: Get https://.*docker.io/.*: net/http: request canceled while waiting for connection"
-#    - "Failed create pod sandbox"
 reporting:
   junit-report: "results/junit-benchmark-tests.xml"
