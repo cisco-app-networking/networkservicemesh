@@ -78,7 +78,7 @@ node('wcm') {
                 sh "cat ../../cluster1-config"
                 sh "cat ../../cluster2-config"
                 sh "go test . --list .* -tags interdomain"
-                sh "go test . -test.timeout 20m0s -count 1 --run \"^(TestInterdomainNSCDies)\\z\" --tags \"interdomain\" --test.v"
+                sh "KUBECONFIG_CLUSTER_1=../../cluster1-config KUBECONFIG_CLUSTER_2=../../cluster2-config go test . -test.timeout 20m0s -count 1 --run \"^(TestInterdomainNSCDies)\\z\" --tags \"interdomain\" --test.v"
                 sh "go test -v * -timeout 5m -run TestInterdomainNSCDies"
             }
             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
