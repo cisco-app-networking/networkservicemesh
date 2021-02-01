@@ -6,14 +6,48 @@ shuffle-enabled: false
 statistics:
   enabled: true
   interval: 30  # 30 seconds for statistics
-import:
-  - .cloudtest/kind.yaml
-  - .cloudtest/executions/.*
+#import:
+#  - .cloudtest/kind.yaml
+#  - .cloudtest/executions/.*
 #    - .cloudtest/packet.yaml
 #    - .cloudtest/gke.yaml
 #    - .cloudtest/vagrant.yaml
 #    - .cloudtest/aws.yaml
 #    - .cloudtest/azure.yaml
+providers:
+  - name: "kind"    # A name of our provider
+    kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
+    instances: 1    # We need to have 1 instance of cloud.
+    node-count: 3   # With 3 nodes, CloudTest will validate if cloud has 3 nodes alive.
+    retry: 1        # A retry count if cloud is failed to start tool will try again.
+    enabled: true   # Indicate Provider is active with config by default, if set to false, values could be overriden using command line arguments.
+    timeout: 300    # 5 minutes to start cluster
+    stop-delay: 10
+    env:
+      - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10)   # Generate a uniq cluster name
+      - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
+    scripts:
+      start: make kind-start
+      config: make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
+      stop: make kind-stop
+      prepare: |
+        make k8s-load-images
+        make spire-install
+        make k8s-config
+executions:
+  - name: "Benchmark tests"
+    env:
+      - ARTIFACTS_ARCHIVE=true
+    source:
+      tags:
+        - bench
+    root: ./test/integration
+    timeout: 600
+    cluster-count: 1
+    cluster-env:
+      - KUBECONFIG
+    on-fail: |
+      make k8s-reset
 
 #retest:  # Allow to do test re-run if some kind of failures are detected, line CNI network plugin errors.
 #  count: 2  # Allow 2 times to do restart

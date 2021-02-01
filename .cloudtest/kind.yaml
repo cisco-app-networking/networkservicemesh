@@ -1,30 +1,22 @@
+
 ---
 version: 1.0
 providers:
   - name: "kind"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
-    instances: 2    # We need to have 2 instances of cloud.
+    instances: 1    # We need to have 1 instance of cloud.
     node-count: 3   # With 3 nodes, CloudTest will validate if cloud has 3 nodes alive.
     retry: 1        # A retry count if cloud is failed to start tool will try again.
     enabled: true   # Indicate Provider is active with config by default, if set to false, values could be overriden using command line arguments.
-    timeout: 600    # 10 minutes to start clusters
+    timeout: 300    # 5 minutes to start cluster
     stop-delay: 10
     env:
-      - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10) # Generate a uniq cluster name
+      - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10)   # Generate a uniq cluster name
       - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
-      - KUBECONFIG_CLUSTER_1=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME)-1
-      - KUBECONFIG_CLUSTER_2=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME)-2
-      - INSECURE=true
     scripts:
-      start: |
-        make kind-start-cluster-1
-        make kind-start-cluster-2
-      config: |
-        make kind-export-kubeconfig-1       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
-        make kind-export-kubeconfig-2
-      stop: |
-        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_1) make kind-stop
-        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_2) make kind-stop
+      start: make kind-start
+      config: make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
+      stop: make kind-stop
       prepare: |
         make k8s-load-images
         make spire-install
