@@ -43,15 +43,15 @@ node('wcm') {
         stage ('Install kind') {
              sh "go get -u sigs.k8s.io/kind@v0.8.1"
         }
-        stage ('Install cloudtest verson 0.2.0') {
+        stage ('Install cloudtest version 0.2.0') {
             sh "go get github.com/networkservicemesh/cloudtest@v0.2.0"
         }
-        stage ('Run benchmark tests') {
-            sh "cloudtest --config .cloudtest-bench.yaml"
-        }
-        stage ('Run single cluster tests') {
-            sh "cloudtest --config .cloudtest-single-cluster.yaml"
-        }
+//         stage ('Run benchmark tests') {
+//             sh "cloudtest --config .cloudtest-bench.yaml"
+//         }
+//         stage ('Run single cluster tests') {
+//             sh "cloudtest --config .cloudtest-single-cluster.yaml"
+//         }
         stage ('Run interdomain tests') {
             sh "cloudtest --config .cloudtest-interdomain.yaml"
         }
