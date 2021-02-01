@@ -74,7 +74,7 @@ node('wcm') {
         }
         stage ('Run TestInterdomainNSCDies') {
             dir ('test/integration') {
-                steps {
+                step {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh '''
                            KUBECONFIG_CLUSTER_1=../../cluster1-config \
@@ -87,7 +87,7 @@ node('wcm') {
         }
         stage ('Run TestInterdomainNSEDies') {
             dir ('test/integration') {
-                steps {
+                step {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh '''
                            KUBECONFIG_CLUSTER_1=../../cluster1-config \
