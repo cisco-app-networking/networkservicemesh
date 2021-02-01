@@ -37,13 +37,13 @@ node('wcm') {
             sh "chmod 700 get_helm.sh"
             sh "./get_helm.sh"
         }
-        stage ('Checkout SCM') {
+        stage ('Checkout code') {
             checkout scm
         }
         stage ('Install kind') {
              sh "go get -u sigs.k8s.io/kind@v0.8.1"
         }
-        stage ('Install cloudtest v0.2.0') {
+        stage ('Install cloudtest verson 0.2.0') {
             sh "go get github.com/networkservicemesh/cloudtest@v0.2.0"
         }
         stage ('Run tests') {

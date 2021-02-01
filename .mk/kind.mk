@@ -40,7 +40,7 @@ kind-start: kind-config
 .PHONY: kind-export-kubeconfig
 kind-export-kubeconfig:
 	@touch $(CONFIG_LOCATION); \
-	kind get kubeconfig --name $(KIND_CLUSTER_NAME) > $(CONFIG_LOCATION); \
+	kind get kubeconfig --name $(KIND_CLUSTER_NAME) > $(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME); \
 	echo "$(CONFIG_LOCATION)"
 
 .PHONY: kind-stop

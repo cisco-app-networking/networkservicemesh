@@ -3,19 +3,31 @@ version: 1.0
 providers:
   - name: "kind"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
-    instances: 1    # We need to have 1 instance of cloud.
+    instances: 2    # We need to have 2 instances of cloud.
     node-count: 3   # With 3 nodes, CloudTest will validate if cloud has 3 nodes alive.
     retry: 1        # A retry count if cloud is failed to start tool will try again.
     enabled: true   # Indicate Provider is active with config by default, if set to false, values could be overriden using command line arguments.
-    timeout: 300    # 5 minutes to start cluster
+    timeout: 600    # 10 minutes to start clusters
     stop-delay: 10
     env:
-      - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10)   # Generate a uniq cluster name
+      - UNIQUE_CLUSTER_ID=$(rands10)
+      - KIND_CLUSTER_NAME=cloudtest-kind-$(UNIQUE_CLUSTER_ID)-1
+      - KIND_CLUSTER_NAME_1=$(KIND_CLUSTER_NAME)   # Generate a uniq cluster name
+      - KIND_CLUSTER_NAME_2=cloudtest-kind-$(UNIQUE_CLUSTER_ID)-2   # Generate a uniq cluster name
       - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
+      - KUBECONFIG_CLUSTER_1=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME_1)
+      - KUBECONFIG_CLUSTER_2=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME_2)
+      - INSECURE=true
     scripts:
-      start: make kind-start
-      config: make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
-      stop: make kind-stop
+      start: |
+        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_1) make kind-start
+        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_2) make kind-start
+      config: |
+        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_1) make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
+        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_2) make kind-export-kubeconfig
+      stop: |
+        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_1) make kind-stop
+        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_2) make kind-stop
       prepare: |
         make k8s-load-images
         make spire-install
