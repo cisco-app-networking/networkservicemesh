@@ -9,7 +9,7 @@ statistics:
 providers:
   - name: "kind"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
-    instances: 2    # We need to have 1 instance of cloud.
+    instances: 1    # We need to have 1 instance of cloud.
     node-count: 3   # With 3 nodes, CloudTest will validate if cloud has 3 nodes alive.
     retry: 1        # A retry count if cloud is failed to start tool will try again.
     enabled: true   # Indicate Provider is active with config by default, if set to false, values could be overriden using command line arguments.
