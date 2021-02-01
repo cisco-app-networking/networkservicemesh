@@ -19,7 +19,8 @@
 !side-cars
 !test
 !utils
-!.cloudtest.yaml
+!.cloudtest-bench.yaml
+!.cloudtest-single-cluster.yaml
 !go.mod
 !go.sum
 !Makefile

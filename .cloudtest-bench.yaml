@@ -62,4 +62,4 @@ executions:
 #    - "Error response from daemon: Get https://.*docker.io/.*: net/http: request canceled while waiting for connection"
 #    - "Failed create pod sandbox"
 reporting:
-  junit-report: "results/junit.xml"
+  junit-report: "results/junit-benchmark-tests.xml"
