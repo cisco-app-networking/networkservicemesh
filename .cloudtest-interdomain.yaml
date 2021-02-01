@@ -34,12 +34,12 @@ providers:
         KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make kind-stop
         KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make kind-stop
       prepare: |
-        ${KIND_CLUSTER_NAME_1} make k8s-load-images
-        ${KIND_CLUSTER_NAME_2} make k8s-load-images
-        ${KIND_CLUSTER_NAME_1} make spire-install
-        ${KIND_CLUSTER_NAME_2} make spire-install
-        ${KIND_CLUSTER_NAME_1} make k8s-config
-        ${KIND_CLUSTER_NAME_2} make k8s-config
+        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make k8s-load-images
+        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make k8s-load-images
+        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make spire-install
+        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make spire-install
+        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_1} make k8s-config
+        KIND_CLUSTER_NAME=${KIND_CLUSTER_NAME_2} make k8s-config
 executions:
   - name: "Interdomain tests"
     env:
