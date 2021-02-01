@@ -29,33 +29,51 @@ kind-config:
 kind-install:
 	GO111MODULE="on" go get -u sigs.k8s.io/kind@master
 
-.PHONY: kind-start
-kind-start: kind-config
-	@kind get clusters | grep $(KIND_CLUSTER_NAME)  >/dev/null 2>&1 && exit 0 || \
-		( kind create cluster --name="$(KIND_CLUSTER_NAME)" --config ./scripts/kind.yaml --wait 120s && \
+.PHONY: kind-start-cluster-1
+kind-start-cluster-1: kind-config
+	@kind get clusters | grep $(KIND_CLUSTER_NAME)-1  >/dev/null 2>&1 && exit 0 || \
+		( kind create cluster --name="$(KIND_CLUSTER_NAME)-1" --config ./scripts/kind.yaml --wait 120s && \
 		until \
-			kubectl taint node $(KIND_CLUSTER_NAME)-control-plane node-role.kubernetes.io/master:NoSchedule- ; \
+			kubectl taint node $(KIND_CLUSTER_NAME)-1-control-plane node-role.kubernetes.io/master:NoSchedule- ; \
 		do echo "Waiting for the cluster to come up" && sleep 3; done )
 
-.PHONY: kind-export-kubeconfig
-kind-export-kubeconfig:
+.PHONY: kind-start-cluster-2
+kind-start-cluster-2: kind-config
+	@kind get clusters | grep $(KIND_CLUSTER_NAME)-2  >/dev/null 2>&1 && exit 0 || \
+		( kind create cluster --name="$(KIND_CLUSTER_NAME)-2" --config ./scripts/kind.yaml --wait 120s && \
+		until \
+			kubectl taint node $(KIND_CLUSTER_NAME)-2-control-plane node-role.kubernetes.io/master:NoSchedule- ; \
+		do echo "Waiting for the cluster to come up" && sleep 3; done )
+
+
+.PHONY: kind-export-kubeconfig-cluster-1
+kind-export-kubeconfig-cluster-1:
 	@touch $(CONFIG_LOCATION); \
-	kind get kubeconfig --name $(KIND_CLUSTER_NAME) > $(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME); \
+	kind get kubeconfig --name $(KIND_CLUSTER_NAME)-1 > $(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME)-1; \
 	echo "$(CONFIG_LOCATION)"
+
+.PHONY: kind-export-kubeconfig-cluster-2
+kind-export-kubeconfig-cluster-2:
+	@touch $(CONFIG_LOCATION); \
+	kind get kubeconfig --name $(KIND_CLUSTER_NAME)-2 > $(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME)-2; \
+	echo "$(CONFIG_LOCATION)"
+
 
 .PHONY: kind-stop
 kind-stop:
-	@kind delete cluster --name="$(KIND_CLUSTER_NAME)"
+	@kind delete cluster --name="$(KIND_CLUSTER_NAME)-1";  \
+	@kind delete cluster --name="$(KIND_CLUSTER_NAME)-2"
 
 .PHONY: kind-restart
-kind-restart: kind-stop kind-start
+kind-restart: kind-stop kind-start-cluster-1 kind-start-cluster-2
 	@echo "kind cluster restarted"
 
 .PHONY: kind-%-load-images
 kind-%-load-images:
 	@if [ -e "$(KIND_IMAGE_PATH)/$*.tar" ]; then \
 		echo "Loading image $*.tar to kind"; \
-		kind load image-archive --name="$(KIND_CLUSTER_NAME)" $(KIND_IMAGE_PATH)$*.tar ; \
+		kind load image-archive --name="$(KIND_CLUSTER_NAME)-1" $(KIND_IMAGE_PATH)$*.tar ; \
+		kind load image-archive --name="$(KIND_CLUSTER_NAME)-2" $(KIND_IMAGE_PATH)$*.tar ; \
 	else \
 		echo "Cannot load $*.tar: $(IMAGE_DIR)/$*.tar does not exist.  Try running 'make k8s-$*-save'"; \
 		exit 1; \

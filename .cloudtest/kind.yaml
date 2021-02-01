@@ -10,21 +10,18 @@ providers:
     timeout: 600    # 10 minutes to start clusters
     stop-delay: 10
     env:
-      - UNIQUE_CLUSTER_ID=$(rands10)
-      - KIND_CLUSTER_NAME=cloudtest-kind-$(UNIQUE_CLUSTER_ID)-1
-      - KIND_CLUSTER_NAME_1=$(KIND_CLUSTER_NAME)   # Generate a uniq cluster name
-      - KIND_CLUSTER_NAME_2=cloudtest-kind-$(UNIQUE_CLUSTER_ID)-2   # Generate a uniq cluster name
+      - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10) # Generate a uniq cluster name
       - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
-      - KUBECONFIG_CLUSTER_1=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME_1)
-      - KUBECONFIG_CLUSTER_2=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME_2)
+      - KUBECONFIG_CLUSTER_1=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME)-1
+      - KUBECONFIG_CLUSTER_2=$(CONFIG_LOCATION)-$(KIND_CLUSTER_NAME)-2
       - INSECURE=true
     scripts:
       start: |
-        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_1) make kind-start
-        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_2) make kind-start
+        make kind-start-cluster-1
+        make kind-start-cluster-2
       config: |
-        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_1) make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
-        KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_2) make kind-export-kubeconfig
+        make kind-export-kubeconfig-1       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
+        make kind-export-kubeconfig-2
       stop: |
         KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_1) make kind-stop
         KIND_CLUSTER_NAME=$(KIND_CLUSTER_NAME_2) make kind-stop
