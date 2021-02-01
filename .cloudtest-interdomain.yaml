@@ -28,7 +28,7 @@ providers:
         KIND_CLUSTER_NAME=cluster1 make kind-start
         KIND_CLUSTER_NAME=cluster2 make kind-start
       config: |
-        KIND_CLUSTER_NAME=cluster1 CONFIG_LOCATION=./.results/cluster1-config make kind-export-kubeconfig
+        KIND_CLUSTER_NAME=cluster1 CONFIG_LOCATION=./cluster1-config make kind-export-kubeconfig
         KIND_CLUSTER_NAME=cluster2 CONFIG_LOCATION=./.results/cluster2-config make kind-export-kubeconfig
       stop: |
         KIND_CLUSTER_NAME=cluster1 make kind-stop
