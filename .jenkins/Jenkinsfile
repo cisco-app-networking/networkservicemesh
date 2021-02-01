@@ -84,6 +84,8 @@ node('wcm') {
             }
         } catch (e) {
             echo e.toString()
+            sh "KIND_CLUSTER_NAME=cluster1 make k8s-reset"
+            sh "KIND_CLUSTER_NAME=cluster2 make k8s-reset"
         }
         try {
             stage ('Run TestInterdomainNSEDies') {
@@ -97,6 +99,21 @@ node('wcm') {
             }
         } catch (e) {
             echo e.toString()
+        }
+        try {
+            stage ('Run TestFloatingInterdomainDieNSE') {
+                dir ('test/integration') {
+                    sh '''
+                       KUBECONFIG_CLUSTER_1=../../cluster1-config \
+                       KUBECONFIG_CLUSTER_2=../../cluster2-config \
+                       go test . -test.timeout 30m0s -count 1 --run "^(TestFloatingInterdomainDieNSE)\\z" --tags "interdomain" --test.v
+                    '''
+                }
+            }
+        } catch (e) {
+            echo e.toString()
+            sh "KIND_CLUSTER_NAME=cluster1 make k8s-reset"
+            sh "KIND_CLUSTER_NAME=cluster2 make k8s-reset"
         }
         stage ('Cleanup clusters used for interdomain tests') {
             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
