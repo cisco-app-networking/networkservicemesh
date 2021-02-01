@@ -72,31 +72,31 @@ node('wcm') {
             sh "KIND_CLUSTER_NAME=cluster1 CONFIG_LOCATION=cluster1-config make kind-export-kubeconfig"
             sh "KIND_CLUSTER_NAME=cluster2 CONFIG_LOCATION=cluster2-config make kind-export-kubeconfig"
         }
-        stage ('Run TestInterdomainNSCDies') {
-            dir ('test/integration') {
-                step {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh '''
-                           KUBECONFIG_CLUSTER_1=../../cluster1-config \
-                           KUBECONFIG_CLUSTER_2=../../cluster2-config \
-                           go test . -test.timeout 30m0s -count 1 --run "^(TestInterdomainNSCDies)\\z" --tags "interdomain" --test.v
-                        '''
-                    }
+        try {
+            stage ('Run TestInterdomainNSCDies') {
+                dir ('test/integration') {
+                    sh '''
+                       KUBECONFIG_CLUSTER_1=../../cluster1-config \
+                       KUBECONFIG_CLUSTER_2=../../cluster2-config \
+                       go test . -test.timeout 30m0s -count 1 --run "^(TestInterdomainNSCDies)\\z" --tags "interdomain" --test.v
+                    '''
                 }
             }
+        } catch (e) {
+            echo e.toString()
         }
-        stage ('Run TestInterdomainNSEDies') {
-            dir ('test/integration') {
-                step {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh '''
-                           KUBECONFIG_CLUSTER_1=../../cluster1-config \
-                           KUBECONFIG_CLUSTER_2=../../cluster2-config \
-                           go test . -test.timeout 30m0s -count 1 --run "^(TestInterdomainNSEDies)\\z" --tags "interdomain" --test.v
-                        '''
-                    }
+        try {
+            stage ('Run TestInterdomainNSEDies') {
+                dir ('test/integration') {
+                            sh '''
+                               KUBECONFIG_CLUSTER_1=../../cluster1-config \
+                               KUBECONFIG_CLUSTER_2=../../cluster2-config \
+                               go test . -test.timeout 30m0s -count 1 --run "^(TestInterdomainNSEDies)\\z" --tags "interdomain" --test.v
+                            '''
                 }
             }
+        } catch (e) {
+            echo e.toString()
         }
         stage ('Cleanup clusters used for interdomain tests') {
             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
