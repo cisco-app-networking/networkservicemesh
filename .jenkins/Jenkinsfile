@@ -48,9 +48,14 @@ node('wcm') {
         stage ('Install cloudtest version 0.2.0') {
             sh "go get github.com/networkservicemesh/cloudtest@v0.2.0"
         }
-//         stage ('Run benchmark tests') {
-//             sh "cloudtest --config .cloudtest-bench.yaml"
-//         }
+        try {
+            stage ('Run benchmark tests') {
+                sh "cloudtest --config .cloudtest-bench.yaml"
+                sh "ls"
+            }
+        } finally {
+            junit 'junit-benchmark-tests.xml'
+        }
 //         stage ('Run single cluster tests') {
 //             sh "cloudtest --config .cloudtest-single-cluster.yaml"
 //         }
