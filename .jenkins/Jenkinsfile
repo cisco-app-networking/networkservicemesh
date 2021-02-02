@@ -51,10 +51,13 @@ node('wcm') {
         try {
             stage ('Run benchmark tests') {
                 sh "cloudtest --config .cloudtest-bench.yaml"
-                sh "ls"
+                sh "ls -al"
+                sh "ls .tests"
+                sh "ls .tests/cloud_test"
+                sh "ls .tests/cloud_test/results"
             }
         } finally {
-            junit 'junit-benchmark-tests.xml'
+            junit '.tests/cloud_test/results/junit-benchmark-tests.xml'
         }
 //         stage ('Run single cluster tests') {
 //             sh "cloudtest --config .cloudtest-single-cluster.yaml"
