@@ -53,7 +53,7 @@ node('wcm') {
         } finally {
             junit '.tests/cloud_test/results/junit-benchmark-tests.xml'
             archiveArtifacts artifacts: '.tests/cloud_test/results/junit-benchmark-tests.xml', allowEmptyArchive: true
-            archiveArtifacts artifacts: '.tests/cloud_test/kind-1/*', allowEmptyArchive: true
+            archiveArtifacts artifacts: '.tests/cloud_test/**', allowEmptyArchive: true
         }
 //         try {
 //             stage ('Run single cluster tests') {
