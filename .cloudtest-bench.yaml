@@ -41,4 +41,4 @@ executions:
     on-fail: |
       make k8s-reset
 reporting:
-  junit-report: "junit-benchmark-tests.xml"
+  junit-report: "results/junit-benchmark-tests.xml"
