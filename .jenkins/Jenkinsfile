@@ -58,6 +58,7 @@ node('wcm') {
             }
         } finally {
             junit '.tests/cloud_test/results/junit-benchmark-tests.xml'
+            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-benchmark-tests.xml', fingerprint: true
         }
 //         stage ('Run single cluster tests') {
 //             sh "cloudtest --config .cloudtest-single-cluster.yaml"
