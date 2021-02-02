@@ -9,37 +9,23 @@ statistics:
 providers:
   - name: "kind"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
-    instances: 1    # We need to have 1 instance of cloud.
+    instances: 2
     node-count: 3   # With 3 nodes, CloudTest will validate if cloud has 3 nodes alive.
     retry: 1        # A retry count if cloud is failed to start tool will try again.
     enabled: true   # Indicate Provider is active with config by default, if set to false, values could be overriden using command line arguments.
     timeout: 300    # 5 minutes to start cluster
     stop-delay: 10
     env:
-#      - UNIQUE_TEST_NAME=cloudtest-kind-$(rand10)
-#      - KIND_CLUSTER_NAME_1=${UNIQUE_TEST_NAME}-1
-#      - KIND_CLUSTER_NAME_2=${UNIQUE_TEST_NAME}-2
-#      - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
-      - KUBECONFIG_CLUSTER_1=./.results/cluster1-config
-      - KUBECONFIG_CLUSTER_2=./.results/cluster2-config
-      - INSECURE=true
+      - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10)   # Generate a uniq cluster name
+      - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
     scripts:
-      start: |
-        KIND_CLUSTER_NAME=cluster1 make kind-start
-        KIND_CLUSTER_NAME=cluster2 make kind-start
-      config: |
-        KIND_CLUSTER_NAME=cluster1 CONFIG_LOCATION=./cluster1-config make kind-export-kubeconfig
-        KIND_CLUSTER_NAME=cluster2 CONFIG_LOCATION=./.results/cluster2-config make kind-export-kubeconfig
-      stop: |
-        KIND_CLUSTER_NAME=cluster1 make kind-stop
-        KIND_CLUSTER_NAME=cluster2 make kind-stop
+      start: make kind-start
+      config: make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
+      stop: make kind-stop
       prepare: |
-        KIND_CLUSTER_NAME=cluster1 make k8s-load-images
-        KIND_CLUSTER_NAME=cluster2 make k8s-load-images
-        KIND_CLUSTER_NAME=cluster1 make spire-install
-        KIND_CLUSTER_NAME=cluster2 make spire-install
-        KIND_CLUSTER_NAME=cluster1 make k8s-config
-        KIND_CLUSTER_NAME=cluster2 make k8s-config
+        make k8s-load-images
+        make spire-install
+        make k8s-config
 executions:
   - name: "Interdomain tests"
     env:
