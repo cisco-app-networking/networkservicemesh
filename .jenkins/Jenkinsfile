@@ -51,18 +51,19 @@ node('wcm') {
         try {
             stage ('Run benchmark tests') {
                 sh "cloudtest --config .cloudtest-bench.yaml"
-                sh "ls -al"
-                sh "ls .tests"
-                sh "ls .tests/cloud_test"
-                sh "ls .tests/cloud_test/results"
             }
         } finally {
             junit '.tests/cloud_test/results/junit-benchmark-tests.xml'
             archiveArtifacts artifacts: '.tests/cloud_test/results/junit-benchmark-tests.xml', fingerprint: true
         }
-//         stage ('Run single cluster tests') {
-//             sh "cloudtest --config .cloudtest-single-cluster.yaml"
-//         }
+        try {
+            stage ('Run single cluster tests') {
+                sh "cloudtest --config .cloudtest-single-cluster.yaml"
+            }
+        } finally {
+            junit '.tests/cloud_test/results/junit-single-cluster-tests.xml'
+            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-single-cluster-tests.xml', fingerprint: true
+        }
 //         stage ('Run interdomain tests') {
 //             sh "cloudtest --config .cloudtest-interdomain.yaml"
 //         }
