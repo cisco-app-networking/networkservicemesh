@@ -4,8 +4,6 @@ node('wcm') {
         environment{
             CGO_ENABLED = 0
             GO111MODULE = on
-            KUBECONFIG_CLUSTER_1 = '../../cluster1-config'
-            KUBECONFIG_CLUSTER_2 = '../../cluster2-config'
         }
         stage ('Install Docker Client') {
             sh "apt-get update"
@@ -54,16 +52,17 @@ node('wcm') {
             }
         } finally {
             junit '.tests/cloud_test/results/junit-benchmark-tests.xml'
-            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-benchmark-tests.xml', fingerprint: true
+            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-benchmark-tests.xml', allowEmptyArchive: true
+            archiveArtifacts artifacts: '.tests/cloud_test/kind-1/*', allowEmptyArchive: true
         }
-        try {
-            stage ('Run single cluster tests') {
-                sh "cloudtest --config .cloudtest-single-cluster.yaml"
-            }
-        } finally {
-            junit '.tests/cloud_test/results/junit-single-cluster-tests.xml'
-            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-single-cluster-tests.xml', fingerprint: true
-        }
+//         try {
+//             stage ('Run single cluster tests') {
+//                 sh "cloudtest --config .cloudtest-single-cluster.yaml"
+//             }
+//         } finally {
+//             junit '.tests/cloud_test/results/junit-single-cluster-tests.xml'
+//             archiveArtifacts artifacts: '.tests/cloud_test/results/junit-single-cluster-tests.xml', fingerprint: true
+//         }
 //         stage ('Run interdomain tests') {
 //             sh "cloudtest --config .cloudtest-interdomain.yaml"
 //         }
@@ -127,9 +126,9 @@ node('wcm') {
 //             sh "KIND_CLUSTER_NAME=cluster1 make k8s-reset"
 //             sh "KIND_CLUSTER_NAME=cluster2 make k8s-reset"
 //         }
-        stage ('Cleanup clusters used for interdomain tests') {
-            sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
-            sh "KIND_CLUSTER_NAME=cluster2 make kind-stop"
-        }
+//         stage ('Cleanup clusters used for interdomain tests') {
+//             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
+//             sh "KIND_CLUSTER_NAME=cluster2 make kind-stop"
+//         }
     }
 }
