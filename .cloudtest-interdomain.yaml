@@ -26,7 +26,6 @@ providers:
         make k8s-load-images
         make spire-install
         make k8s-config
-providers:
   - name: "kindb"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
     instances: 1
