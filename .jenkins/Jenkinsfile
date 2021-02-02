@@ -62,9 +62,9 @@ node('wcm') {
 //         stage ('Run single cluster tests') {
 //             sh "cloudtest --config .cloudtest-single-cluster.yaml"
 //         }
-        stage ('Run interdomain tests') {
-            sh "cloudtest --config .cloudtest-interdomain.yaml"
-        }
+//         stage ('Run interdomain tests') {
+//             sh "cloudtest --config .cloudtest-interdomain.yaml"
+//         }
 //         stage ('Setup clusters for interdomain tests') {
 //             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
 //             sh "KIND_CLUSTER_NAME=cluster2 make kind-stop"
