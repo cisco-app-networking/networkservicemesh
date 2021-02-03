@@ -58,15 +58,15 @@ node('wcm') {
 //             junit '.tests/cloud_test/single-cluster/results/junit-single-cluster-tests.xml'
 //         }
 //
-//         try {
-//             stage ('Run interdomain tests') {
-//                 sh "cloudtest --config .cloudtest-interdomain.yaml"
-//             }
-//         } catch (e) {
-//             build_ok = false
-//         } finally {
-//             junit '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
-//         }
+        try {
+            stage ('Run interdomain tests') {
+                sh "cloudtest --config .cloudtest-interdomain.yaml"
+            }
+        } catch (e) {
+            build_ok = false
+        } finally {
+            junit '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
+        }
 
         try {
             stage ('Run benchmark tests') {
