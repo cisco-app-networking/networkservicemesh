@@ -1,6 +1,6 @@
 ---
 version: 1.0
-root: "./.tests/cloud_test/"
+root: "./.tests/cloud_test/single-cluster/"
 timeout: 7200  # 2 hour total total timeout
 shuffle-enabled: false
 statistics:
