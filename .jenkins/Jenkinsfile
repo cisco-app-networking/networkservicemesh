@@ -61,12 +61,13 @@ node('wcm') {
         } finally {
             junit '.tests/cloud_test/results/junit-single-cluster-tests.xml'
             archiveArtifacts artifacts: '.tests/cloud_test/results/junit-single-cluster-tests.xml', fingerprint: true
-        }
-        stage ('Run interdomain tests') {
-            sh "cloudtest --config .cloudtest-interdomain.yaml"
-            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-interdomain-tests.xml', fingerprint: true
             archiveArtifacts artifacts: '.tests/cloud_test/**', allowEmptyArchive: true
         }
+//         stage ('Run interdomain tests') {
+//             sh "cloudtest --config .cloudtest-interdomain.yaml"
+//             archiveArtifacts artifacts: '.tests/cloud_test/results/junit-interdomain-tests.xml', fingerprint: true
+//             archiveArtifacts artifacts: '.tests/cloud_test/**', allowEmptyArchive: true
+//         }
 //         stage ('Setup clusters for interdomain tests') {
 //             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
 //             sh "KIND_CLUSTER_NAME=cluster2 make kind-stop"
