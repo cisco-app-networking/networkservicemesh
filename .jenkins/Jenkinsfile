@@ -79,7 +79,7 @@ node('wcm') {
         }
 
         stage ('Archive test results and logs') {
-            archiveArtifacts artifacts: '.tests/cloud_test/single-cluster/**, .tests/cloud_test/interdomain/**, .tests/cloud_test/bench/**', allowEmptyArchive: true, fingerprint: true
+            archiveArtifacts artifacts: '.tests/cloud_test/**/*', allowEmptyArchive: true, fingerprint: true
         }
 
         if (build_ok) {
