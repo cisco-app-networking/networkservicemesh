@@ -60,77 +60,16 @@ node('wcm') {
             }
         } finally {
             junit '.tests/cloud_test/results/junit-single-cluster-tests.xml'
-            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-single-cluster-tests.xml', fingerprint: true
-            archiveArtifacts artifacts: '.tests/cloud_test/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: '.tests/cloud_test/results/junit-single-cluster-tests.xml'
         }
-//         stage ('Run interdomain tests') {
-//             sh "cloudtest --config .cloudtest-interdomain.yaml"
-//             archiveArtifacts artifacts: '.tests/cloud_test/results/junit-interdomain-tests.xml', fingerprint: true
-//             archiveArtifacts artifacts: '.tests/cloud_test/**', allowEmptyArchive: true
-//         }
-//         stage ('Setup clusters for interdomain tests') {
-//             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
-//             sh "KIND_CLUSTER_NAME=cluster2 make kind-stop"
-//             sh "KIND_CLUSTER_NAME=cluster1 make kind-start"
-//             sh "KIND_CLUSTER_NAME=cluster2 make kind-start"
-//             sh "kubectl config get-contexts"
-//             sh "kubectl config use-context kind-cluster1"
-//             sh "KIND_CLUSTER_NAME=cluster1 make spire-install"
-//             sh "CLUSTER_RULES_PREFIX=kind KIND_CLUSTER_NAME=cluster1 make k8s-config"
-//             sh "CLUSTER_RULES_PREFIX=kind KIND_CLUSTER_NAME=cluster1 make k8s-load-images"
-//             sh "kubectl config use-context kind-cluster2"
-//             sh "KIND_CLUSTER_NAME=cluster2 make spire-install"
-//             sh "CLUSTER_RULES_PREFIX=kind KIND_CLUSTER_NAME=cluster2 make k8s-config"
-//             sh "CLUSTER_RULES_PREFIX=kind KIND_CLUSTER_NAME=cluster2 make k8s-load-images"
-//             sh "KIND_CLUSTER_NAME=cluster1 CONFIG_LOCATION=cluster1-config make kind-export-kubeconfig"
-//             sh "KIND_CLUSTER_NAME=cluster2 CONFIG_LOCATION=cluster2-config make kind-export-kubeconfig"
-//         }
-//         try {
-//             stage ('Run TestInterdomainNSCDies') {
-//                 dir ('test/integration') {
-//                     sh '''
-//                        KUBECONFIG_CLUSTER_1=../../cluster1-config \
-//                        KUBECONFIG_CLUSTER_2=../../cluster2-config \
-//                        go test . -test.timeout 30m0s -count 1 --run "^(TestInterdomainNSCDies)\\z" --tags "interdomain" --test.v
-//                     '''
-//                 }
-//             }
-//         } catch (e) {
-//             echo e.toString()
-//             sh "KIND_CLUSTER_NAME=cluster1 make k8s-reset"
-//             sh "KIND_CLUSTER_NAME=cluster2 make k8s-reset"
-//         }
-//         try {
-//             stage ('Run TestInterdomainNSEDies') {
-//                 dir ('test/integration') {
-//                             sh '''
-//                                KUBECONFIG_CLUSTER_1=../../cluster1-config \
-//                                KUBECONFIG_CLUSTER_2=../../cluster2-config \
-//                                go test . -test.timeout 30m0s -count 1 --run "^(TestInterdomainNSEDies)\\z" --tags "interdomain" --test.v
-//                             '''
-//                 }
-//             }
-//         } catch (e) {
-//             echo e.toString()
-//         }
-//         try {
-//             stage ('Run TestFloatingInterdomainDieNSE') {
-//                 dir ('test/integration') {
-//                     sh '''
-//                        KUBECONFIG_CLUSTER_1=../../cluster1-config \
-//                        KUBECONFIG_CLUSTER_2=../../cluster2-config \
-//                        go test . -test.timeout 30m0s -count 1 --run "^(TestFloatingInterdomainDieNSE)\\z" --tags "interdomain" --test.v
-//                     '''
-//                 }
-//             }
-//         } catch (e) {
-//             echo e.toString()
-//             sh "KIND_CLUSTER_NAME=cluster1 make k8s-reset"
-//             sh "KIND_CLUSTER_NAME=cluster2 make k8s-reset"
-//         }
-//         stage ('Cleanup clusters used for interdomain tests') {
-//             sh "KIND_CLUSTER_NAME=cluster1 make kind-stop"
-//             sh "KIND_CLUSTER_NAME=cluster2 make kind-stop"
-//         }
+        try {
+            stage ('Run interdomain tests') {
+                sh "cloudtest --config .cloudtest-interdomain.yaml"
+                archiveArtifacts artifacts: '.tests/cloud_test/results/junit-interdomain-tests.xml'
+            }
+        } finally {
+            junit '.tests/cloud_test/results/junit-interdomain-tests.xml'
+            archiveArtifacts artifacts: '.tests/cloud_test/kind-1/*', allowEmptyArchive: true
+        }
     }
 }
