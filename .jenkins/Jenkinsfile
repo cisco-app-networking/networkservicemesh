@@ -48,25 +48,25 @@ node('wcm') {
             sh "go get github.com/networkservicemesh/cloudtest@v0.2.0"
         }
 
-        try {
-            stage ('Run single cluster tests') {
-                sh "cloudtest --config .cloudtest-single-cluster.yaml"
-            }
-        } catch (e) {
-            build_ok = false
-        } finally {
-            junit '.tests/cloud_test/single-cluster/results/junit-single-cluster-tests.xml'
-        }
-
-        try {
-            stage ('Run interdomain tests') {
-                sh "cloudtest --config .cloudtest-interdomain.yaml"
-            }
-        } catch (e) {
-            build_ok = false
-        } finally {
-            junit '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
-        }
+//         try {
+//             stage ('Run single cluster tests') {
+//                 sh "cloudtest --config .cloudtest-single-cluster.yaml"
+//             }
+//         } catch (e) {
+//             build_ok = false
+//         } finally {
+//             junit '.tests/cloud_test/single-cluster/results/junit-single-cluster-tests.xml'
+//         }
+//
+//         try {
+//             stage ('Run interdomain tests') {
+//                 sh "cloudtest --config .cloudtest-interdomain.yaml"
+//             }
+//         } catch (e) {
+//             build_ok = false
+//         } finally {
+//             junit '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
+//         }
 
         try {
             stage ('Run benchmark tests') {
@@ -78,7 +78,9 @@ node('wcm') {
             junit '.tests/cloud_test/bench/results/junit-benchmark-tests.xml'
         }
 
-        archiveArtifacts artifacts: '.tests/cloud_test/**', allowEmptyArchive: true, fingerprint: true
+        stage ('Archive test results and logs') {
+            archiveArtifacts artifacts: '.tests/cloud_test/single-cluster/**, .tests/cloud_test/interdomain/**, .tests/cloud_test/bench/**', allowEmptyArchive: true, fingerprint: true
+        }
 
         if (build_ok) {
             currentBuild.result = "SUCCESS"
