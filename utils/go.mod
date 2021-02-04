@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/caddyserver/caddy v1.0.5
-	github.com/networkservicemesh/networkservicemesh/controlplane/api v1.0.0
+	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.2.5-vl3
 	github.com/onsi/gomega v1.7.0
 	github.com/pkg/errors v0.8.1
 	github.com/sirupsen/logrus v1.4.2

@@ -3,18 +3,16 @@ module github.com/networkservicemesh/networkservicemesh/k8s
 go 1.13
 
 require (
-	github.com/HdrHistogram/hdrhistogram-go v1.0.1 // indirect
 	github.com/golang/protobuf v1.4.2
-	github.com/networkservicemesh/networkservicemesh/controlplane v1.0.1
-	github.com/networkservicemesh/networkservicemesh/controlplane/api v1.0.0
-	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis v1.0.0
-	github.com/networkservicemesh/networkservicemesh/pkg v1.0.0
-	github.com/networkservicemesh/networkservicemesh/sdk v1.0.3
-	github.com/networkservicemesh/networkservicemesh/utils v1.0.0
+	github.com/networkservicemesh/networkservicemesh/controlplane v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/k8s/pkg/apis v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/pkg v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/sdk v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/utils v0.2.5-vl3
 	github.com/onsi/gomega v1.10.3
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.6.0
-	github.com/uber/jaeger-lib v2.4.0+incompatible // indirect
 	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0
 	google.golang.org/grpc v1.29.1
 	k8s.io/api v0.18.1

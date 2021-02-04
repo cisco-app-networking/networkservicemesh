@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/golang/protobuf v1.3.2
-	github.com/networkservicemesh/networkservicemesh/controlplane/api v1.0.0
+	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.2.5-vl3
 	google.golang.org/grpc v1.27.0
 )
 
