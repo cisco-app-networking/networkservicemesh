@@ -18,14 +18,10 @@ else
 selfSignedCA = false
 endif
 
-.PHONY: tiller-install
-tiller-install:
-	helm init --wait && ./scripts/helm-patch-tiller.sh
-
 .PHONY: spire-install
-spire-install: tiller-install
+spire-install:
 	$(info Self Signed CA = $(selfSignedCA))
-	@if ! helm install --name=spire \
+	@if ! helm install \
 	--wait --timeout 600 \
 	--set org="${CONTAINER_REPO}",tag="${CONTAINER_TAG}" \
 	--set selfSignedCA="${selfSignedCA}",caDir="${CA_DIR}" \
