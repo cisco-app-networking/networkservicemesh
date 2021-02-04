@@ -4,11 +4,11 @@ go 1.13
 
 require (
 	github.com/golang/protobuf v1.4.2
-	github.com/networkservicemesh/networkservicemesh/controlplane/api v1.0.0
-	github.com/networkservicemesh/networkservicemesh/forwarder/api v1.0.0
-	github.com/networkservicemesh/networkservicemesh/pkg v1.0.0
-	github.com/networkservicemesh/networkservicemesh/sdk v1.0.3
-	github.com/networkservicemesh/networkservicemesh/utils v1.0.0
+	github.com/networkservicemesh/networkservicemesh/controlplane/api v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/forwarder/api v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/pkg v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/sdk v0.2.5-vl3
+	github.com/networkservicemesh/networkservicemesh/utils v0.2.5-vl3
 	github.com/onsi/gomega v1.10.3
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/pkg/errors v0.9.1
