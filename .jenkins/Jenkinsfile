@@ -66,6 +66,7 @@ node('wcm') {
             build_ok = false
         } finally {
             junit '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
+            archiveArtifacts artifacts:'.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml', fingerprint: true, onlyIfSuccessful: false
         }
 
         try {
@@ -76,12 +77,13 @@ node('wcm') {
             build_ok = false
         } finally {
             junit '.tests/cloud_test/bench/results/junit-benchmark-tests.xml'
+            archiveArtifacts artifacts: '.tests/cloud_test/bench/results/junit-benchmark-tests.xml', fingerprint: true, onlyIfSuccessful: false
         }
 
-        stage ('Archive test results and logs') {
-            archiveArtifacts '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
-            archiveArtifacts '.tests/cloud_test/bench/results/junit-benchmark-tests.xml'
-            archiveArtifacts artifacts: '.tests/cloud_test/**/*', allowEmptyArchive: true, fingerprint: true
+        stage ('Archive all test results and logs') {
+            dir('.tests/cloud_test') {
+                archiveArtifacts artifacts: '**', fingerprint: true, onlyIfSuccessful: false
+            }
         }
 
         if (build_ok) {
