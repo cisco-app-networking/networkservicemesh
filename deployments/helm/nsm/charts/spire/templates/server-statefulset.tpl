@@ -23,7 +23,7 @@ spec:
         - name: nsm-spire
           securityContext:
             privileged: true
-          image: {{ .Values.registry }}/{{ .Values.org }}/nsm-spire:{{ .Values.tag }}
+          image: '{{ .Values.registry }}/{{ .Values.org }}/nsm-spire:{{ .Values.tag }}'
           volumeMounts:
             - name: spire-server-socket
               mountPath: /run/spire/sockets
