@@ -79,6 +79,8 @@ node('wcm') {
         }
 
         stage ('Archive test results and logs') {
+            archiveArtifacts '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
+            archiveArtifacts '.tests/cloud_test/bench/results/junit-benchmark-tests.xml'
             archiveArtifacts artifacts: '.tests/cloud_test/**/*', allowEmptyArchive: true, fingerprint: true
         }
 
