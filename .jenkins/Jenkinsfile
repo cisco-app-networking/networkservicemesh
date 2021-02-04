@@ -48,16 +48,16 @@ node('wcm') {
             sh "go get github.com/networkservicemesh/cloudtest@v0.2.0"
         }
 
-//         try {
-//             stage ('Run single cluster tests') {
-//                 sh "cloudtest --config .cloudtest-single-cluster.yaml"
-//             }
-//         } catch (e) {
-//             build_ok = false
-//         } finally {
-//             junit '.tests/cloud_test/single-cluster/results/junit-single-cluster-tests.xml'
-//         }
-//
+        try {
+            stage ('Run single cluster tests') {
+                sh "cloudtest --config .cloudtest-single-cluster.yaml"
+            }
+        } catch (e) {
+            build_ok = false
+        } finally {
+            junit '.tests/cloud_test/single-cluster/results/junit-single-cluster-tests.xml'
+        }
+
         try {
             stage ('Run interdomain tests') {
                 sh "cloudtest --config .cloudtest-interdomain.yaml"
@@ -66,7 +66,6 @@ node('wcm') {
             build_ok = false
         } finally {
             junit '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
-            archiveArtifacts artifacts:'.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml', fingerprint: true, onlyIfSuccessful: false
         }
 
         try {
@@ -77,7 +76,6 @@ node('wcm') {
             build_ok = false
         } finally {
             junit '.tests/cloud_test/bench/results/junit-benchmark-tests.xml'
-            archiveArtifacts artifacts: '.tests/cloud_test/bench/results/junit-benchmark-tests.xml', fingerprint: true, onlyIfSuccessful: false
         }
 
         stage ('Archive all test results and logs') {
