@@ -19,7 +19,6 @@ require (
 	github.com/networkservicemesh/networkservicemesh/test v0.0.0-00010101000000-000000000000
 	github.com/networkservicemesh/networkservicemesh/utils v0.3.0
 	github.com/onsi/gomega v1.10.3
-	github.com/packethost/packngo v0.5.1 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.1.0
 	github.com/sirupsen/logrus v1.6.0
