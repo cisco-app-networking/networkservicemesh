@@ -1,6 +1,11 @@
-
 ---
 version: 1.0
+root: "./.tests/cloud_test/bench/"
+timeout: 7200  # 2 hour total total timeout
+shuffle-enabled: false
+statistics:
+  enabled: true
+  interval: 30  # 30 seconds for statistics
 providers:
   - name: "kind"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
@@ -12,7 +17,7 @@ providers:
     stop-delay: 10
     env:
       - KIND_CLUSTER_NAME=cloudtest-kind-$(rands10)   # Generate a uniq cluster name
-      - CONFIG_LOCATION=$(tempdir)/config             # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
+      - CONFIG_LOCATION=$(tempdir)/config            # Put Kubernetes configuration file here, $(tempdir) a executable variable name pointing to temporary folder.
     scripts:
       start: make kind-start
       config: make kind-export-kubeconfig       # Use make file to generate kind config and put it into a file specified with CONFIG_LOCATION environment variable.
@@ -21,3 +26,19 @@ providers:
         make k8s-load-images
         make spire-install
         make k8s-config
+executions:
+  - name: "Benchmark tests"
+    env:
+      - ARTIFACTS_ARCHIVE=true
+    source:
+      tags:
+        - bench
+    root: ./test/integration
+    timeout: 600
+    cluster-count: 1
+    cluster-env:
+      - KUBECONFIG
+    on-fail: |
+      make k8s-reset
+reporting:
+  junit-report: "results/junit-benchmark-tests.xml"

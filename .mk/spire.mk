@@ -21,8 +21,8 @@ endif
 .PHONY: spire-install
 spire-install:
 	$(info Self Signed CA = $(selfSignedCA))
-	@if ! helm install --name=spire \
-	--wait --timeout 600 \
+	@if ! helm install spire \
+	--wait --timeout 600s \
 	--set org="${CONTAINER_REPO}",tag="${CONTAINER_TAG}" \
 	--set selfSignedCA="${selfSignedCA}",caDir="${CA_DIR}" \
 	deployments/helm/nsm/charts/spire ; then \

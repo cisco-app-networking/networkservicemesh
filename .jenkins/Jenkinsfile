@@ -1,0 +1,93 @@
+//The Jenkinsfile runs entire build in a golang container and mounts the /var/run/docker.sock file to allow access to the host docker within the container
+node('wcm') {
+    def build_ok = true
+    docker.image('golang:1.15-buster').inside('-u root --net=host -v /var/run/docker.sock:/var/run/docker.sock') {
+        environment{
+            CGO_ENABLED = 0
+            GO111MODULE = on
+        }
+        stage ('Install Docker Client') {
+            sh "apt-get update"
+            sh '''
+               apt-get install -y \
+               apt-transport-https \
+               ca-certificates \
+               curl \
+               gnupg-agent \
+               software-properties-common
+            '''
+            sh "curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -"
+            sh '''
+               add-apt-repository \
+               "deb [arch=amd64] https://download.docker.com/linux/debian \
+               $(lsb_release -cs) \
+               stable"
+            '''
+            sh "apt-get update && apt-get install -y docker-ce-cli"
+        }
+        stage ('Install yq') {
+            sh "wget -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/2.1.2/yq_linux_amd64"
+            sh "chmod 555 /usr/bin/yq"
+        }
+        stage ('Install kubectl') {
+            sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/\"\$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)\"/bin/linux/amd64/kubectl"
+            sh "chmod +x kubectl && mv kubectl /usr/local/bin/"
+        }
+        stage ('Install Helm') {
+            sh "curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3"
+            sh "chmod 700 get_helm.sh"
+            sh "./get_helm.sh"
+        }
+        stage ('Checkout code') {
+            checkout scm
+        }
+        stage ('Install kind') {
+             sh "go get -u sigs.k8s.io/kind@v0.8.1"
+        }
+        stage ('Install cloudtest version 0.2.0') {
+            sh "go get github.com/networkservicemesh/cloudtest@v0.2.0"
+        }
+
+        try {
+            stage ('Run single cluster tests') {
+                sh "cloudtest --config .cloudtest-single-cluster.yaml"
+            }
+        } catch (e) {
+            build_ok = false
+        } finally {
+            junit '.tests/cloud_test/single-cluster/results/junit-single-cluster-tests.xml'
+        }
+
+        try {
+            stage ('Run interdomain tests') {
+                sh "cloudtest --config .cloudtest-interdomain.yaml"
+            }
+        } catch (e) {
+            build_ok = false
+        } finally {
+            junit '.tests/cloud_test/interdomain/results/junit-interdomain-tests.xml'
+        }
+
+        try {
+            stage ('Run benchmark tests') {
+                sh "cloudtest --config .cloudtest-bench.yaml"
+            }
+        } catch (e) {
+            build_ok = false
+        } finally {
+            junit '.tests/cloud_test/bench/results/junit-benchmark-tests.xml'
+        }
+
+        stage ('Archive all test results and logs') {
+            dir('.tests/cloud_test') {
+                archiveArtifacts artifacts: '**', fingerprint: true, onlyIfSuccessful: false
+            }
+        }
+
+        if (build_ok) {
+            currentBuild.result = "SUCCESS"
+        } else {
+            currentBuild.result = "FAILURE"
+        }
+    }
+}

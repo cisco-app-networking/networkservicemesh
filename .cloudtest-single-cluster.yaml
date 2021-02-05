@@ -1,6 +1,11 @@
-
 ---
 version: 1.0
+root: "./.tests/cloud_test/single-cluster/"
+timeout: 7200  # 2 hour total total timeout
+shuffle-enabled: false
+statistics:
+  enabled: true
+  interval: 30  # 30 seconds for statistics
 providers:
   - name: "kind"    # A name of our provider
     kind: "shell"   # A type of provider, shell indicate we need to specify all operations with shell commands.
@@ -21,3 +26,21 @@ providers:
         make k8s-load-images
         make spire-install
         make k8s-config
+executions:
+  - name: "Single cluster tests"
+    env:
+      - ARTIFACTS_ARCHIVE=true
+    source:
+      tags:
+        - basic
+        - recover
+        - usecase
+    root: ./test/integration
+    timeout: 300
+    cluster-count: 1
+    cluster-env:
+      - KUBECONFIG
+    on-fail: |
+      make k8s-reset
+reporting:
+  junit-report: "results/junit-single-cluster-tests.xml"
